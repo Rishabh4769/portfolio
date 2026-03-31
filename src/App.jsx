@@ -1,78 +1,83 @@
 import { useEffect } from "react";
 
-const metrics = [
-  { value: "3+", label: "Years building backend systems" },
-  { value: "25+", label: "Scripts, tools, and automation experiments" },
-  { value: "Daily", label: "Linux, networking, and security practice" },
+const stats = [
+  { value: "03+", label: "Years building backend systems" },
+  { value: "25+", label: "Automation scripts and internal tools" },
+  { value: "24/7", label: "Security-first operating mindset" },
 ];
 
-const focusAreas = [
+const pillars = [
   {
-    title: "Secure backend engineering",
-    text: "Designing APIs and service layers with authentication, logging, validation, and operational clarity built in from the start.",
+    id: "01",
+    title: "Secure backend systems",
+    text: "I design API layers and service flows with validation, auth boundaries, logging, and maintainability considered from the start.",
   },
   {
+    id: "02",
     title: "Cybersecurity growth",
-    text: "Studying networking, operating systems, Linux internals, and threat modeling to improve how systems are defended in practice.",
+    text: "I am actively building stronger intuition around Linux, networking, threat modeling, and systems behavior so engineering decisions hold up under pressure.",
   },
   {
-    title: "Full-stack delivery",
-    text: "Shipping MERN applications end to end when the product needs both a reliable backend and a clean user-facing experience.",
+    id: "03",
+    title: "Full-stack execution",
+    text: "When the product needs it, I move beyond the backend and ship complete MERN experiences with clear structure and production-minded implementation.",
   },
 ];
 
 const projects = [
   {
-    type: "Research tooling",
-    name: "StealthKey",
+    label: "Python research build",
+    title: "StealthKey",
     summary:
-      "Python proof-of-concept for keystroke capture research, focused on log handling, system behavior, and secure storage patterns.",
-    stack: ["Python", "Security tooling", "OS behavior"],
+      "A keystroke research proof-of-concept focused on system behavior, encrypted logging paths, and controlled experimentation around host-level monitoring.",
+    tags: ["Python", "Security tooling", "System research"],
   },
   {
-    type: "MERN platform",
-    name: "Frolics",
+    label: "MERN application",
+    title: "Frolics",
     summary:
-      "University event management system covering registrations, team workflows, payment coordination, and role-aware administration.",
-    stack: ["MongoDB", "Express", "React", "Node.js"],
+      "An event operating system for university workflows covering registrations, team management, payment coordination, and role-based access logic.",
+    tags: ["MongoDB", "Express", "React", "Node.js"],
   },
   {
-    type: "Networking",
-    name: "DeepPacket",
+    label: "Network analysis",
+    title: "DeepPacket",
     summary:
-      "Packet inspection experiment built to explore protocol parsing, live traffic filtering, and anomaly-oriented visibility.",
-    stack: ["Python", "Scapy", "Network analysis"],
+      "A packet inspection experiment for learning traffic capture, protocol interpretation, filter pipelines, and anomaly-oriented visibility.",
+    tags: ["Python", "Scapy", "Packet analysis"],
   },
 ];
 
-const toolkit = [
-  "Node.js",
-  "Express",
-  "MongoDB",
-  "React",
-  "JavaScript",
-  "Python",
-  "REST APIs",
-  "Linux",
-  "Git",
-  "JWT/Auth flows",
-];
-
-const journey = [
+const stackGroups = [
   {
-    period: "Now",
-    title: "Backend Developer focused on secure systems",
-    text: "Building production-minded backend work while sharpening cybersecurity fundamentals through hands-on practice.",
+    title: "Core stack",
+    items: ["Node.js", "Express", "MongoDB", "React", "JavaScript", "Python"],
   },
   {
-    period: "Current track",
+    title: "Backend priorities",
+    items: ["REST APIs", "Auth flows", "Validation", "Logging", "Role controls", "Operational clarity"],
+  },
+  {
+    title: "Systems learning",
+    items: ["Linux", "Networking", "OS internals", "Threat modeling", "Shell workflows", "Git discipline"],
+  },
+];
+
+const timeline = [
+  {
+    period: "Present",
+    title: "Backend developer with a security-first lens",
+    text: "Shipping practical backend work while deliberately strengthening the systems knowledge behind it.",
+  },
+  {
+    period: "Current edge",
     title: "MERN plus Python automation",
-    text: "Combining application development with scripting and tooling to move faster across implementation, testing, and debugging.",
+    text: "Combining app delivery with scripting and tooling so I can move efficiently across debugging, implementation, and iteration.",
   },
   {
-    period: "Learning edge",
-    title: "Networking, Linux, and OS internals",
-    text: "Using systems-level study to make better engineering decisions around hardening, visibility, and reliability.",
+    period: "Next phase",
+    title: "Deeper infrastructure and defensive engineering",
+    text: "Pushing further into system behavior, network visibility, and resilient architecture so product code is backed by stronger technical depth.",
   },
 ];
 
@@ -95,11 +100,11 @@ function App() {
           }
         });
       },
-      { threshold: 0.16, rootMargin: "0px 0px -8% 0px" },
+      { threshold: 0.14, rootMargin: "0px 0px -8% 0px" },
     );
 
     elements.forEach((element, index) => {
-      element.style.setProperty("--reveal-delay", `${Math.min(index * 70, 280)}ms`);
+      element.style.setProperty("--reveal-delay", `${Math.min(index * 75, 300)}ms`);
       observer.observe(element);
     });
 
@@ -108,10 +113,12 @@ function App() {
 
   return (
     <div className="app-shell">
-      <div className="ambient ambient-left" />
-      <div className="ambient ambient-right" />
+      <div className="scene-grid" />
+      <div className="orb orb-a" />
+      <div className="orb orb-b" />
+      <div className="orb orb-c" />
 
-      <header className="site-header" data-reveal>
+      <header className="site-header reveal" data-reveal>
         <a className="brand" href="#top" aria-label="Go to top">
           <span className="brand-mark">R</span>
           <span className="brand-copy">
@@ -122,108 +129,136 @@ function App() {
 
         <nav className="site-nav" aria-label="Primary">
           <a href="#work">Work</a>
-          <a href="#focus">Focus</a>
-          <a href="#journey">Journey</a>
+          <a href="#capabilities">Capabilities</a>
+          <a href="#stack">Stack</a>
           <a href="#contact" className="button button-primary">
-            Contact
+            Let&apos;s talk
           </a>
         </nav>
       </header>
 
       <main id="top">
         <section className="hero section">
-          <div className="hero-copy" data-reveal>
-            <span className="eyebrow">Portfolio 2026</span>
-            <h1>Backend engineering with a security-first mindset.</h1>
+          <div className="hero-copy reveal" data-reveal>
+            <div className="eyebrow">Portfolio 2026</div>
+            <h1>
+              A premium engineering portfolio for
+              <span className="headline-accent"> secure backend execution.</span>
+            </h1>
             <p className="hero-text">
-              I build APIs, service logic, and full-stack systems with reliability,
-              authentication, and operational clarity in mind. Alongside delivery work,
-              I am deepening my cybersecurity foundation through Linux, networking, and
-              systems-level study.
+              I build backend systems and full-stack products with a clear bias toward
+              security, operational clarity, and long-term maintainability. My current
+              direction is simple: ship reliable software and deepen the systems knowledge
+              behind every decision.
             </p>
 
             <div className="hero-actions">
               <a className="button button-primary" href="mailto:rishabh@pm.me">
-                rishabh@pm.me
+                Contact via email
               </a>
               <a className="button button-secondary" href="#work">
-                Selected projects
+                Explore selected work
               </a>
+            </div>
+
+            <div className="signal-strip">
+              <span>Node.js</span>
+              <span>Express</span>
+              <span>MongoDB</span>
+              <span>React</span>
+              <span>Python</span>
+              <span>Linux</span>
             </div>
           </div>
 
-          <aside className="hero-panel" data-reveal>
-            <div className="status-row">
-              <span className="status-dot" />
-              <span>Open to backend and full-stack opportunities</span>
+          <div className="hero-stage reveal" data-reveal>
+            <div className="stage stage-main">
+              <div className="stage-panel panel-primary">
+                <span className="mini-label">Current direction</span>
+                <h2>Security-aware backend engineering</h2>
+                <p>
+                  Building APIs and service logic with stronger auth boundaries,
+                  observability, and systems awareness.
+                </p>
+              </div>
+
+              <div className="floating-card card-top">
+                <span className="mini-label">Focus</span>
+                <strong>API hardening</strong>
+                <p>Validation, auth, logs, and role-aware flows.</p>
+              </div>
+
+              <div className="floating-card card-mid">
+                <span className="mini-label">Learning</span>
+                <strong>Linux + Networking</strong>
+                <p>Practical systems depth behind product work.</p>
+              </div>
+
+              <div className="floating-card card-base">
+                <span className="mini-label">Approach</span>
+                <strong>Build clearly</strong>
+                <p>Readable architecture over flashy complexity.</p>
+              </div>
             </div>
-            <div className="panel-block">
-              <span className="panel-label">Primary stack</span>
-              <p>Node.js, Express, MongoDB, React, Python</p>
-            </div>
-            <div className="panel-block">
-              <span className="panel-label">Engineering priorities</span>
-              <p>Auth hardening, logging, API design, maintainable delivery</p>
-            </div>
-            <div className="panel-block">
-              <span className="panel-label">Learning focus</span>
-              <p>Linux, networking, OS internals, secure system thinking</p>
-            </div>
-          </aside>
+          </div>
         </section>
 
-        <section className="metrics section" data-reveal>
-          {metrics.map((item) => (
-            <article className="metric-card" key={item.label}>
-              <strong>{item.value}</strong>
-              <span>{item.label}</span>
+        <section className="stats-row section reveal" data-reveal>
+          {stats.map((stat) => (
+            <article className="stat-card" key={stat.label}>
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
             </article>
           ))}
         </section>
 
-        <section className="section two-column" id="focus">
-          <div className="section-intro" data-reveal>
-            <span className="eyebrow">Focus</span>
-            <h2>Engineering work grounded in resilience and systems thinking.</h2>
+        <section className="section split-layout" id="capabilities">
+          <div className="section-copy reveal" data-reveal>
+            <div className="eyebrow">Capabilities</div>
+            <h2>Professional presentation, grounded by actual engineering priorities.</h2>
             <p>
-              My portfolio is centered on backend delivery, but the longer-term direction
-              is broader: build reliable applications, understand infrastructure deeply,
-              and make stronger security decisions at every layer.
+              This portfolio is intentionally designed to feel premium, but the message is
+              still technical and credible. The strongest work is not decoration. It is
+              clarity, trust, and disciplined execution.
             </p>
           </div>
 
-          <div className="card-stack">
-            {focusAreas.map((item) => (
-              <article className="info-card" data-reveal key={item.title}>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
+          <div className="pillar-grid">
+            {pillars.map((pillar) => (
+              <article className="pillar-card reveal" data-reveal key={pillar.id}>
+                <span className="pillar-id">{pillar.id}</span>
+                <h3>{pillar.title}</h3>
+                <p>{pillar.text}</p>
               </article>
             ))}
           </div>
         </section>
 
         <section className="section" id="work">
-          <div className="section-heading" data-reveal>
-            <span className="eyebrow">Selected Work</span>
-            <h2>Projects that reflect how I build.</h2>
+          <div className="section-heading reveal" data-reveal>
+            <div className="eyebrow">Selected Work</div>
+            <h2>Projects that communicate taste, discipline, and technical direction.</h2>
             <p>
-              The work spans application development, security experimentation, and
-              networking practice, but the throughline is consistent: learn fast, build
-              clearly, and make systems easier to trust.
+              Each project highlights a different side of the same profile: backend
+              delivery, research-minded security work, and systems-level curiosity that
+              improves the quality of shipped software.
             </p>
           </div>
 
           <div className="project-grid">
-            {projects.map((project) => (
-              <article className="project-card" data-reveal key={project.name}>
-                <div className="project-topline">
-                  <span>{project.type}</span>
-                  <span className="project-index">0{projects.indexOf(project) + 1}</span>
-                </div>
-                <h3>{project.name}</h3>
+            {projects.map((project, index) => (
+              <article
+                className="project-card reveal"
+                data-reveal
+                key={project.title}
+                style={{ "--card-tilt": `${index % 2 === 0 ? "-5deg" : "5deg"}` }}
+              >
+                <div className="project-no">0{index + 1}</div>
+                <span className="mini-label">{project.label}</span>
+                <h3>{project.title}</h3>
                 <p>{project.summary}</p>
                 <div className="tag-row">
-                  {project.stack.map((tag) => (
+                  {project.tags.map((tag) => (
                     <span className="tag" key={tag}>
                       {tag}
                     </span>
@@ -234,58 +269,62 @@ function App() {
           </div>
         </section>
 
-        <section className="section toolkit-layout">
-          <div className="toolkit-panel" data-reveal>
-            <span className="eyebrow">Toolkit</span>
-            <h2>Core technologies and working habits.</h2>
-            <p>
-              I prefer straightforward architecture, readable code paths, and practical
-              security controls over complexity that looks impressive but is harder to
-              operate.
-            </p>
+        <section className="section stack-section" id="stack">
+          <div className="section-heading reveal" data-reveal>
+            <div className="eyebrow">Stack + Method</div>
+            <h2>The toolkit is practical. The intent is high-end.</h2>
           </div>
 
-          <div className="toolkit-grid" data-reveal>
-            {toolkit.map((item) => (
-              <span className="tool-chip" key={item}>
-                {item}
-              </span>
-            ))}
-          </div>
-        </section>
-
-        <section className="section" id="journey">
-          <div className="section-heading" data-reveal>
-            <span className="eyebrow">Journey</span>
-            <h2>Where the work is heading next.</h2>
-          </div>
-
-          <div className="timeline">
-            {journey.map((item) => (
-              <article className="timeline-item" data-reveal key={item.title}>
-                <span className="timeline-period">{item.period}</span>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
+          <div className="stack-grid">
+            {stackGroups.map((group) => (
+              <article className="stack-card reveal" data-reveal key={group.title}>
+                <span className="mini-label">{group.title}</span>
+                <div className="chip-grid">
+                  {group.items.map((item) => (
+                    <span className="tool-chip" key={item}>
+                      {item}
+                    </span>
+                  ))}
                 </div>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="section contact-card" id="contact" data-reveal>
-          <div>
-            <span className="eyebrow">Contact</span>
-            <h2>Let’s build reliable software.</h2>
+        <section className="section" id="journey">
+          <div className="timeline-shell reveal" data-reveal>
+            <div className="section-heading timeline-heading">
+              <div className="eyebrow">Trajectory</div>
+              <h2>Where the work is moving next.</h2>
+            </div>
+
+            <div className="timeline">
+              {timeline.map((item) => (
+                <article className="timeline-item" key={item.title}>
+                  <span className="timeline-period">{item.period}</span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section contact-shell reveal" data-reveal id="contact">
+          <div className="contact-copy">
+            <div className="eyebrow">Contact</div>
+            <h2>Need a portfolio that feels top-tier because the work deserves it?</h2>
             <p>
-              If you need a developer who cares about backend quality, secure defaults,
-              and steady execution, I am available to talk.
+              I am available for backend, full-stack, and security-aware engineering
+              opportunities. If the standard is high, that is the point.
             </p>
           </div>
 
           <div className="contact-actions">
             <a className="button button-primary" href="mailto:rishabh@pm.me">
-              Email me
+              rishabh@pm.me
             </a>
             <a
               className="button button-secondary"
