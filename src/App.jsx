@@ -132,7 +132,7 @@ function App() {
       <main id="top">
         <section className="hero section">
           <div className="hero-nameplate reveal" data-reveal>
-            <div className="eyebrow hero-name-kicker">Portfolio 2026</div>
+            <div className="eyebrow hero-name-kicker">Portfolio</div>
             <p className="hero-name-intro">Rishabh</p>
             <h1 className="hero-name-title">Backend Developer</h1>
             <p className="hero-name-subtitle">
@@ -318,15 +318,15 @@ function App() {
         <section className="section contact-shell reveal" data-reveal id="contact">
           <div className="contact-copy">
             <div className="eyebrow">Contact</div>
-            <h2>Need a portfolio that feels top-tier because the work deserves it?</h2>
+            <h2>Open to meaningful work, strong teams, and ambitious products.</h2>
             <p>
-              I am available for backend, full-stack, and security-aware engineering
-              opportunities. If the standard is high, that is the point.
+              Available for backend, full-stack, and security-aware engineering roles.
+              If you are building reliable software and need disciplined execution, let&apos;s connect.
             </p>
           </div>
 
           <div className="contact-actions">
-            <a className="button button-primary" href="mailto:rishabh@pm.me">
+            <a className="button button-primary" href="mailto:joshirisabh205@gmail.com">
               rishabh@pm.me
             </a>
             <a

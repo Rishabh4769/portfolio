@@ -35,7 +35,7 @@ body {
     radial-gradient(circle at 50% 60%, rgba(255, 211, 155, 0.06), transparent 24%),
     linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
   color: var(--text);
-  font-family: "Manrope", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -114,8 +114,12 @@ a {
   align-items: center;
   justify-content: center;
   gap: 18px;
-  padding: 14px 16px;
-  background: rgba(6, 11, 24, 0.62);
+  width: min(70%, 860px);
+  margin: 0 auto;
+  padding: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent),
+    rgba(6, 11, 24, 0.72);
   border: 1px solid var(--line);
   border-radius: 999px;
   backdrop-filter: blur(18px);
@@ -125,22 +129,40 @@ a {
 .site-nav {
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 12px;
+  padding: 4px;
   justify-content: center;
 }
 
 .site-nav a:not(.button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
   color: var(--muted);
   font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition:
+    color 220ms ease,
+    background 220ms ease,
+    transform 220ms ease;
+}
+
+.site-nav a:not(.button):hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
 }
 
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 46px;
-  padding: 0 18px;
+  min-height: 44px;
+  padding: 0 20px;
   border-radius: 999px;
   border: 1px solid transparent;
   font-weight: 700;
@@ -183,6 +205,8 @@ a {
   display: grid;
   justify-items: center;
   text-align: center;
+  width: 100%;
+  margin: 0 auto;
   padding: 10px 0 18px;
 }
 
@@ -192,18 +216,27 @@ a {
 
 .hero-name-intro {
   margin: 18px 0 8px;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.86rem;
-  letter-spacing: 0.22em;
+  width: 100%;
+  text-align: center;
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(4rem, 14vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  color: var(--text);
   text-transform: uppercase;
-  color: var(--muted);
+  text-indent: 0.08em;
 }
 
 .hero-name-title {
   margin: 0;
-  font-size: clamp(3.8rem, 11vw, 8rem);
-  line-height: 0.88;
-  letter-spacing: -0.08em;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(1.2rem, 2.8vw, 1.9rem);
+  line-height: 1.1;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
 .hero-name-subtitle {
@@ -250,9 +283,10 @@ a {
 .timeline-heading h2,
 .contact-copy h2 {
   margin: 0;
+  font-family: "Outfit", sans-serif;
   font-size: clamp(2.8rem, 6vw, 5.8rem);
   line-height: 0.94;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.04em;
 }
 
 .headline-accent {
@@ -371,6 +405,7 @@ a {
 
 .stage-panel h2 {
   margin: 14px 0 12px;
+  font-family: "Outfit", sans-serif;
   font-size: clamp(1.8rem, 3vw, 2.4rem);
   line-height: 1.02;
   letter-spacing: -0.04em;
@@ -476,7 +511,9 @@ a {
 .project-card h3,
 .timeline-item h3 {
   margin: 0 0 10px;
+  font-family: "Outfit", sans-serif;
   font-size: 1.24rem;
+  letter-spacing: -0.03em;
 }
 
 .project-grid {
@@ -615,11 +652,16 @@ a {
   .site-header {
     position: static;
     border-radius: 30px;
-    padding: 14px;
+    width: 100%;
+    min-width: 0;
+    padding: 10px;
   }
 
   .site-nav {
     width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 2px;
   }
 
   .section {
@@ -635,7 +677,7 @@ a {
   }
 
   .hero-name-title {
-    font-size: clamp(3rem, 15vw, 4.8rem);
+    font-size: clamp(1rem, 4.6vw, 1.35rem);
   }
 
   .stage-panel {
