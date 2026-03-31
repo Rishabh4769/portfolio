@@ -85,30 +85,30 @@ function App() {
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const elements = Array.from(document.querySelectorAll("[data-reveal]"));
+    let observer;
 
     if (prefersReduced || !("IntersectionObserver" in window)) {
       elements.forEach((element) => element.classList.add("is-visible"));
-      return;
+    } else {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.14, rootMargin: "0px 0px -8% 0px" },
+      );
+
+      elements.forEach((element, index) => {
+        element.style.setProperty("--reveal-delay", `${Math.min(index * 75, 300)}ms`);
+        observer.observe(element);
+      });
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.14, rootMargin: "0px 0px -8% 0px" },
-    );
-
-    elements.forEach((element, index) => {
-      element.style.setProperty("--reveal-delay", `${Math.min(index * 75, 300)}ms`);
-      observer.observe(element);
-    });
-
-    return () => observer.disconnect();
+    return () => observer?.disconnect();
   }, []);
 
   return (
@@ -119,14 +119,6 @@ function App() {
       <div className="orb orb-c" />
 
       <header className="site-header reveal" data-reveal>
-        <a className="brand" href="#top" aria-label="Go to top">
-          <span className="brand-mark">R</span>
-          <span className="brand-copy">
-            <strong>Rishabh</strong>
-            <span>Backend Developer</span>
-          </span>
-        </a>
-
         <nav className="site-nav" aria-label="Primary">
           <a href="#work">Work</a>
           <a href="#capabilities">Capabilities</a>
@@ -139,11 +131,20 @@ function App() {
 
       <main id="top">
         <section className="hero section">
+          <div className="hero-nameplate reveal" data-reveal>
+            <div className="eyebrow hero-name-kicker">Portfolio 2026</div>
+            <p className="hero-name-intro">Rishabh</p>
+            <h1 className="hero-name-title">Backend Developer</h1>
+            <p className="hero-name-subtitle">
+              Secure systems, full-stack execution, and a sharper engineering standard.
+            </p>
+          </div>
+
           <div className="hero-copy reveal" data-reveal>
-            <div className="eyebrow">Portfolio 2026</div>
+            <div className="eyebrow">Overview</div>
             <h1>
-              A premium engineering portfolio for
-              <span className="headline-accent"> secure backend execution.</span>
+              I build backend systems that stay
+              <span className="headline-accent"> secure, fast, and dependable.</span>
             </h1>
             <p className="hero-text">
               I build backend systems and full-stack products with a clear bias toward
@@ -172,8 +173,8 @@ function App() {
           </div>
 
           <div className="hero-stage reveal" data-reveal>
-            <div className="stage stage-main">
-              <div className="stage-panel panel-primary">
+            <div className="stage-panel panel-primary">
+              <div className="stage-panel-content">
                 <span className="mini-label">Current direction</span>
                 <h2>Security-aware backend engineering</h2>
                 <p>
@@ -181,20 +182,22 @@ function App() {
                   observability, and systems awareness.
                 </p>
               </div>
+            </div>
 
-              <div className="floating-card card-top">
+            <div className="hero-card-grid">
+              <div className="floating-card">
                 <span className="mini-label">Focus</span>
                 <strong>API hardening</strong>
                 <p>Validation, auth, logs, and role-aware flows.</p>
               </div>
 
-              <div className="floating-card card-mid">
+              <div className="floating-card">
                 <span className="mini-label">Learning</span>
                 <strong>Linux + Networking</strong>
                 <p>Practical systems depth behind product work.</p>
               </div>
 
-              <div className="floating-card card-base">
+              <div className="floating-card">
                 <span className="mini-label">Approach</span>
                 <strong>Build clearly</strong>
                 <p>Readable architecture over flashy complexity.</p>
