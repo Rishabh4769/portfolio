@@ -62,7 +62,7 @@ const majorWorks = [
   {
     label: "Network Security",
     link: "https://github.com/Rishabh4769/Graduation-Projects/tree/main/Python-Projects/Packet-Sniffer",
-    title: "Network Packet Sniffer",
+    title: "NetScope",
     summary:
       "Real-time capture, inspection, and alerting for network monitoring, anomaly spotting, and deeper packet-level understanding.",
     details: [
@@ -75,7 +75,7 @@ const majorWorks = [
   {
     label: "Endpoint Research",
     link: "https://github.com/Rishabh4769/Graduation-Projects/tree/main/Python-Projects/Keylogger",
-    title: "StealthKey Keylogger",
+    title: "StealthKey",
     summary:
       "A security-focused keylogger build used to explore host-level monitoring, keystroke capture workflows, and the defensive implications of endpoint surveillance techniques.",
     details: [
