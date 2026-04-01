@@ -92,7 +92,6 @@ function App() {
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const elements = Array.from(document.querySelectorAll("[data-reveal]"));
-    const root = document.documentElement;
     let observer;
 
     if (prefersReduced || !("IntersectionObserver" in window)) {
@@ -116,37 +115,7 @@ function App() {
       });
     }
 
-    if (prefersReduced) {
-      return () => observer?.disconnect();
-    }
-
-    let frame = 0;
-
-    const handlePointerMove = (event) => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        root.style.setProperty("--glow-x", `${event.clientX}px`);
-        root.style.setProperty("--glow-y", `${event.clientY}px`);
-      });
-    };
-
-    const handlePointerLeave = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        root.style.setProperty("--glow-x", "50vw");
-        root.style.setProperty("--glow-y", "22vh");
-      });
-    };
-
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    window.addEventListener("pointerleave", handlePointerLeave);
-
-    return () => {
-      observer?.disconnect();
-      cancelAnimationFrame(frame);
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerleave", handlePointerLeave);
-    };
+    return () => observer?.disconnect();
   }, []);
 
   useEffect(() => {
