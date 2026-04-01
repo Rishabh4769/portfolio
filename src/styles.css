@@ -239,6 +239,45 @@ a {
   text-indent: 0.08em;
 }
 
+.hero-name-track {
+  position: relative;
+  display: inline-block;
+  min-height: 1em;
+}
+
+.hero-name-visible,
+.hero-name-ghost {
+  white-space: nowrap;
+}
+
+.hero-name-visible {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  color: var(--text);
+}
+
+.hero-name-ghost {
+  color: transparent;
+  user-select: none;
+}
+
+.hero-name-caret {
+  position: absolute;
+  top: 50%;
+  width: 0.08em;
+  height: 0.82em;
+  background: rgba(159, 199, 255, 0.96);
+  box-shadow: 0 0 12px rgba(120, 223, 255, 0.55);
+  transform: translate(-0.02em, -50%);
+  animation: blinkCaret 900ms steps(1) infinite;
+}
+
+.hero-name-intro.is-typed .hero-name-caret {
+  opacity: 0.85;
+}
+
 .hero-name-title {
   margin: 0;
   width: 100%;
@@ -783,5 +822,16 @@ a {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@keyframes blinkCaret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
   }
 }

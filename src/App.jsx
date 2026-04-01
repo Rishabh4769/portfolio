@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const resumeHref = "/Rishabh_Resume.pdf";
+const heroName = "Rishabh";
 
 const stats = [
   { value: "03+", label: "Years building backend systems" },
@@ -84,6 +85,10 @@ const timeline = [
 ];
 
 function App() {
+  const [typingProgress, setTypingProgress] = useState(0);
+  const [isTypingDone, setIsTypingDone] = useState(false);
+  const [startTyping, setStartTyping] = useState(false);
+
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const elements = Array.from(document.querySelectorAll("[data-reveal]"));
@@ -144,6 +149,84 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReduced) {
+      setTypingProgress(1);
+      setIsTypingDone(true);
+      return undefined;
+    }
+
+    const heroNameplate = document.querySelector("[data-hero-name]");
+
+    if (!heroNameplate || !("IntersectionObserver" in window)) {
+      setStartTyping(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setStartTyping(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.45 },
+    );
+
+    observer.observe(heroNameplate);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!startTyping || isTypingDone) {
+      return undefined;
+    }
+
+    let frame = 0;
+    let holdTimeout = 0;
+    let startTime = 0;
+    const duration = 1850;
+    const startDelay = 700;
+
+    const easeOutCubic = (value) => 1 - (1 - value) ** 3;
+
+    const step = (timestamp) => {
+      if (!startTime) {
+        startTime = timestamp + startDelay;
+      }
+
+      if (timestamp < startTime) {
+        frame = window.requestAnimationFrame(step);
+        return;
+      }
+
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      setTypingProgress(easeOutCubic(progress));
+
+      if (progress < 1) {
+        frame = window.requestAnimationFrame(step);
+        return;
+      }
+
+      holdTimeout = window.setTimeout(() => {
+        setIsTypingDone(true);
+      }, 260);
+    };
+
+    frame = window.requestAnimationFrame(step);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(holdTimeout);
+    };
+  }, [isTypingDone, startTyping]);
+
   return (
     <div className="app-shell">
       <div className="scene-grid" />
@@ -164,9 +247,26 @@ function App() {
 
       <main id="top">
         <section className="hero section">
-          <div className="hero-nameplate reveal" data-reveal>
+          <div className="hero-nameplate reveal" data-reveal data-hero-name>
             <div className="eyebrow hero-name-kicker">Portfolio</div>
-            <p className="hero-name-intro">Rishabh</p>
+            <p className={`hero-name-intro ${isTypingDone ? "is-typed" : ""}`}>
+              <span className="hero-name-track" aria-label={heroName}>
+                <span
+                  className="hero-name-visible"
+                  style={{ width: `${typingProgress * 100}%` }}
+                >
+                  {heroName}
+                </span>
+                <span className="hero-name-ghost" aria-hidden="true">
+                  {heroName}
+                </span>
+                <span
+                  className="hero-name-caret"
+                  aria-hidden="true"
+                  style={{ left: `${typingProgress * 100}%` }}
+                />
+              </span>
+            </p>
             <h1 className="hero-name-title">Backend Developer</h1>
             <p className="hero-name-subtitle">
               Secure systems, full-stack execution, and a sharper engineering standard.
