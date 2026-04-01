@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+const resumeHref = "/Rishabh_Resume.pdf";
+
 const stats = [
   { value: "03+", label: "Years building backend systems" },
   { value: "25+", label: "Automation scripts and internal tools" },
@@ -85,6 +87,7 @@ function App() {
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const elements = Array.from(document.querySelectorAll("[data-reveal]"));
+    const root = document.documentElement;
     let observer;
 
     if (prefersReduced || !("IntersectionObserver" in window)) {
@@ -108,7 +111,37 @@ function App() {
       });
     }
 
-    return () => observer?.disconnect();
+    if (prefersReduced) {
+      return () => observer?.disconnect();
+    }
+
+    let frame = 0;
+
+    const handlePointerMove = (event) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        root.style.setProperty("--glow-x", `${event.clientX}px`);
+        root.style.setProperty("--glow-y", `${event.clientY}px`);
+      });
+    };
+
+    const handlePointerLeave = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        root.style.setProperty("--glow-x", "50vw");
+        root.style.setProperty("--glow-y", "22vh");
+      });
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerleave", handlePointerLeave);
+
+    return () => {
+      observer?.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerleave", handlePointerLeave);
+    };
   }, []);
 
   return (
@@ -116,13 +149,13 @@ function App() {
       <div className="scene-grid" />
       <div className="orb orb-a" />
       <div className="orb orb-b" />
-      <div className="orb orb-c" />
 
       <header className="site-header reveal" data-reveal>
         <nav className="site-nav" aria-label="Primary">
-          <a href="#work">Work</a>
           <a href="#capabilities">Capabilities</a>
+          <a href="#work">Work</a>
           <a href="#stack">Stack</a>
+          <a href="#resume">Resume</a>
           <a href="#contact" className="button button-primary">
             Let&apos;s talk
           </a>
@@ -156,6 +189,14 @@ function App() {
             <div className="hero-actions">
               <a className="button button-primary" href="mailto:rishabh@pm.me">
                 Contact via email
+              </a>
+              <a
+                className="button button-secondary"
+                href={resumeHref}
+                target="_blank"
+                rel="noreferrer"
+              >
+                View resume
               </a>
               <a className="button button-secondary" href="#work">
                 Explore selected work
@@ -315,6 +356,34 @@ function App() {
           </div>
         </section>
 
+        <section className="section resume-shell reveal" data-reveal id="resume">
+          <div className="resume-copy">
+            <div className="eyebrow">Resume</div>
+            <h2>Everything important, in one downloadable snapshot.</h2>
+            <p>
+              View the latest version online or download the PDF directly for sharing,
+              applications, and outreach.
+            </p>
+            <span className="resume-note">
+              Place your PDF at <code>public/Rishabh_Resume.pdf</code> before deploy.
+            </span>
+          </div>
+
+          <div className="resume-actions">
+            <a
+              className="button button-primary"
+              href={resumeHref}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View resume
+            </a>
+            <a className="button button-secondary" href={resumeHref} download>
+              Download PDF
+            </a>
+          </div>
+        </section>
+
         <section className="section contact-shell reveal" data-reveal id="contact">
           <div className="contact-copy">
             <div className="eyebrow">Contact</div>
@@ -326,8 +395,16 @@ function App() {
           </div>
 
           <div className="contact-actions">
-            <a className="button button-primary" href="mailto:joshirisabh205@gmail.com">
+            <a className="button button-primary" href="mailto:joshirishabh205@gmail.com">
               rishabh@pm.me
+            </a>
+            <a
+              className="button button-secondary"
+              href={resumeHref}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Resume
             </a>
             <a
               className="button button-secondary"
@@ -339,7 +416,7 @@ function App() {
             </a>
             <a
               className="button button-secondary"
-              href="https://www.linkedin.com/in/rishabh"
+              href="https://www.linkedin.com/in/rishabh-joshi-992834326/"
               target="_blank"
               rel="noreferrer"
             >
