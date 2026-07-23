@@ -1,65 +1,90 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const resumeHref = "/Rishabh_Resume.pdf";
 const heroName = "Rishabh";
 
+const navLinks = [
+  { href: "#about", label: "About" },
+  { href: "#capabilities", label: "Capabilities" },
+  { href: "#work", label: "Work" },
+  { href: "#stack", label: "Stack" },
+  { href: "#journey", label: "Journey" },
+];
+
 const quickStats = [
-  { value: "B.Tech", label: "CSE student building security-centric work" },
-  { value: "Full-Stack", label: "Backend-first delivery with practical security focus" },
-  { value: "Cyber", label: "Foundation, offensive security, and modern threat research" },
+  { value: "B.Tech CSE", label: "Information security focused, targeting the 2027 placement cycle." },
+  { value: "Real-Time NIDS", label: "Live packet capture paired with ML-based attack classification." },
+  { value: "ISC2 CC", label: "Certified in Cybersecurity exam targeted for May 2027." },
 ];
 
 const aboutPoints = [
-  "Exploring modern tech, offensive security, and emerging cyber threats.",
-  "Interested in low-level behavior, edge-case exploits, and unusual network traffic.",
-  "Focused on security-centric projects during B.Tech CSE studies.",
-  "Building Android security tools, API-driven apps, and secure communication systems.",
+  "Specializing in Network Security and Intrusion Detection Systems.",
+  "Hands-on experience with real-time packet analysis and ML-based threat detection.",
+  "Building security-centric tools during B.Tech CSE with a defensive-first mindset.",
+  "Currently preparing for ISC2 Certified in Cybersecurity (CC).",
 ];
 
-const interests = [
-  "Mobile Security",
-  "IoT Security",
-  "PenTesting",
-  "Network Security",
-  "Secure App Development",
-  "Android Security Tools",
-];
+const aboutPointTitles = ["Core Focus", "Applied Skill", "Engineering Approach", "Certification Track"];
 
 const capabilities = [
   {
     id: "01",
-    title: "Security-first development",
-    text: "I approach application work with a bias toward secure design, cleaner trust boundaries, and implementation details that hold up under scrutiny.",
+    title: "Network Security & Threat Detection",
+    text: "Designed Project Plexus — a real-time NIDS using Scapy and XGBoost for live attack detection.",
   },
   {
     id: "02",
-    title: "Full-stack execution",
-    text: "I build beyond isolated experiments, combining backend logic, APIs, frontend delivery, and project structure into complete working systems.",
+    title: "Secure Development Practices",
+    text: "Security-first approach in full-stack work — input validation, secure architecture, and safe coding.",
   },
   {
     id: "03",
-    title: "Research-oriented mindset",
-    text: "I like exploring odd edge cases, network behavior, low-level patterns, and the parts of software most people skip past too quickly.",
+    title: "Practical Security Research",
+    text: "Exploring traffic analysis, endpoint behavior, and real-world attack surfaces.",
   },
 ];
 
 const techGroups = [
   {
     title: "Languages",
-    items: ["Java", "Python", "PHP", "JavaScript", "SQL", "MongoDB"],
+    items: ["Python", "JavaScript", "SQL"],
   },
   {
-    title: "Frameworks & Libraries",
-    items: ["Laravel", "Django", "Flask", "Bootstrap", "REST APIs"],
+    title: "Security & ML Tools",
+    items: ["Scapy", "XGBoost", "Kali Linux", "Wireshark", "Docker"],
   },
   {
-    title: "Tools, Platforms & Security",
-    items: ["HTML5", "CSS3", "Bash", "Linux", "Kali Linux", "Git", "Docker", "Android"],
+    title: "Frameworks & Platforms",
+    items: ["FastAPI", "React", "Linux", "Git"],
   },
+];
+
+const interests = [
+  "Network Security",
+  "Intrusion Detection",
+  "Traffic Analysis",
+  "Applied ML for Security",
+  "Secure Development",
+  "Full-Stack Delivery",
 ];
 
 const majorWorks = [
   {
+    featured: true,
+    label: "Network Security · Featured Build",
+    link: "https://github.com/Rishabh4769",
+    title: "Project Plexus",
+    summary:
+      "A real-time Network Intrusion Detection System that watches live traffic and flags attacks as they happen, combining a Scapy packet-capture engine with a trained ML classifier.",
+    details: [
+      "FastAPI + Scapy backend streams live packet data to a React dashboard over WebSockets.",
+      "Random Forest / XGBoost classifier trained on CICIDS2017 separates normal traffic from attack patterns.",
+      "Rule-based and ML-based alerts feed a shared alert queue, with PDF incident reports generated on demand.",
+    ],
+    tags: ["Python", "FastAPI", "Scapy", "XGBoost", "React", "WebSockets"],
+  },
+  {
+    featured: false,
     label: "Network Security",
     link: "https://github.com/Rishabh4769/Graduation-Projects/tree/main/Python-Projects/Packet-Sniffer",
     title: "NetScope",
@@ -68,95 +93,106 @@ const majorWorks = [
     details: [
       "Built to inspect live traffic flows and understand protocol-level behavior in a practical way.",
       "Focused on packet capture, filtering logic, inspection workflows, and anomaly-oriented monitoring ideas.",
-      "Used as a hands-on security project to strengthen network visibility and traffic analysis fundamentals.",
     ],
     tags: ["Python", "Packet Analysis", "Network Security"],
-  },
-  {
-    label: "Endpoint Research",
-    link: "https://github.com/Rishabh4769/Graduation-Projects/tree/main/Python-Projects/Keylogger",
-    title: "StealthKey",
-    summary:
-      "A security-focused keylogger build used to explore host-level monitoring, keystroke capture workflows, and the defensive implications of endpoint surveillance techniques.",
-    details: [
-      "Built as a research-oriented project to understand keystroke capture techniques and local host monitoring behavior.",
-      "Explores endpoint visibility, logging patterns, and the security implications of surveillance-style tooling.",
-      "Useful for understanding both offensive possibilities and the defensive need for stronger endpoint awareness.",
-    ],
-    tags: ["Python", "Endpoint Monitoring", "Security Research"],
   },
 ];
 
 const roadmap = [
   {
-    period: "Next step",
-    title: "Go deeper into penetration testing",
-    text: "Build stronger Metasploit workflows, custom payload familiarity, and more practical red-team execution.",
+    period: "Next Step",
+    title: "ISC2 Certified in Cybersecurity (CC)",
+    text: "Target: May 2027 — building strong foundational knowledge.",
   },
   {
-    period: "Security track",
-    title: "Explore Android and mobile security",
-    text: "Study reverse engineering, malware analysis, and app-level security issues across mobile environments.",
+    period: "Core Focus",
+    title: "Deepen Network Security & Threat Detection",
+    text: "Enhance Project Plexus with deep learning models.",
   },
   {
-    period: "Applied research",
-    title: "Use ML and AI for anomaly detection",
-    text: "Apply intelligent detection approaches to network traffic, logs, and suspicious behavioral patterns.",
-  },
-  {
-    period: "Engineering path",
-    title: "Ship security-by-design applications",
-    text: "Combine full-stack delivery with CI/CD, defensive thinking, and DevSecOps practices from the beginning.",
+    period: "Applied Skills",
+    title: "Cross-Platform Support",
+    text: "Add Windows support to Project Plexus.",
   },
 ];
 
-function App() {
-  const [typingProgress, setTypingProgress] = useState(0);
-  const [isTypingDone, setIsTypingDone] = useState(false);
-  const [startTyping, setStartTyping] = useState(false);
+const terminalCommands = [
+  {
+    name: "about",
+    aliases: ["about"],
+    href: "#about",
+    output: [
+      "Security-focused CSE student — network defense, real-time detection, ML.",
+      "Opening about section...",
+    ],
+  },
+  {
+    name: "capabilities",
+    aliases: ["capabilities", "skills"],
+    href: "#capabilities",
+    output: ["network-security   secure-development   applied-research", "Opening capabilities..."],
+  },
+  {
+    name: "project",
+    aliases: ["project", "projects", "work"],
+    href: "#work",
+    output: [
+      "Real-time NIDS online. FastAPI + Scapy + XGBoost.",
+      "Loading Project Plexus and NetScope...",
+    ],
+  },
+  {
+    name: "stack",
+    aliases: ["stack", "tech"],
+    href: "#stack",
+    output: ["python  fastapi  scapy  xgboost  react  docker  git", "Opening tech stack..."],
+  },
+  {
+    name: "journey",
+    aliases: ["journey", "roadmap"],
+    href: "#journey",
+    output: ["ISC2 Certified in Cybersecurity — exam targeted May 2027.", "Opening roadmap..."],
+  },
+  {
+    name: "contact",
+    aliases: ["contact"],
+    href: "#contact",
+    output: ["email · linkedin · github ready.", "Opening contact..."],
+  },
+  {
+    name: "resume",
+    aliases: ["resume", "cv"],
+    href: "#resume",
+    output: ["Fetching latest resume...", "Opening resume section..."],
+  },
+  {
+    name: "hi",
+    aliases: ["hi", "hello", "hey", "yo"],
+    href: null,
+    hidden: true,
+    output: ["hi, i'm rishabh — b.tech cse, information security focused.", "type 'help' to see what this terminal can do."],
+  },
+  {
+    name: "whoami",
+    aliases: ["whoami"],
+    href: null,
+    hidden: true,
+    output: ["rishabh — network security & full-stack development."],
+  },
+];
 
+const btnPrimary =
+  "inline-flex items-center justify-center rounded-full bg-signal px-6 py-3 font-mono text-sm font-medium text-bg transition hover:brightness-110 active:brightness-95";
+const btnSecondary =
+  "inline-flex items-center justify-center rounded-full border border-line-strong bg-panel px-6 py-3 font-mono text-sm font-medium text-ink transition hover:border-signal/60 hover:text-signal";
+
+function useReveal() {
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const elements = Array.from(document.querySelectorAll("[data-reveal]"));
-    let observer;
 
     if (prefersReduced || !("IntersectionObserver" in window)) {
       elements.forEach((element) => element.classList.add("is-visible"));
-    } else {
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.14, rootMargin: "0px 0px -8% 0px" },
-      );
-
-      elements.forEach((element, index) => {
-        element.style.setProperty("--reveal-delay", `${Math.min(index * 75, 300)}ms`);
-        observer.observe(element);
-      });
-    }
-
-    return () => observer?.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReduced) {
-      setTypingProgress(1);
-      setIsTypingDone(true);
-      return undefined;
-    }
-
-    const heroNameplate = document.querySelector("[data-hero-name]");
-
-    if (!heroNameplate || !("IntersectionObserver" in window)) {
-      setStartTyping(true);
       return undefined;
     }
 
@@ -164,404 +200,531 @@ function App() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setStartTyping(true);
-            observer.disconnect();
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.45 },
+      { threshold: 0.14, rootMargin: "0px 0px -8% 0px" },
     );
 
-    observer.observe(heroNameplate);
+    elements.forEach((element, index) => {
+      element.style.setProperty("--reveal-delay", `${Math.min(index * 60, 280)}ms`);
+      observer.observe(element);
+    });
 
     return () => observer.disconnect();
   }, []);
+}
+
+function SectionHeading({ eyebrow, title, text }) {
+  return (
+    <div className="reveal max-w-2xl" data-reveal>
+      <span className="font-mono text-sm uppercase tracking-[0.16em] text-signal">{eyebrow}</span>
+      <h2 className="mt-4 text-3xl font-semibold leading-snug text-ink md:text-4xl">{title}</h2>
+      {text ? <p className="mt-4 text-base leading-relaxed text-muted">{text}</p> : null}
+    </div>
+  );
+}
+
+function TerminalNav() {
+  const [history, setHistory] = useState([
+    { type: "system", text: "Welcome to rishabh@plexus — type 'help' to see available commands." },
+  ]);
+  const [value, setValue] = useState("");
+  const [cmdHistory, setCmdHistory] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const logRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
-    if (!startTyping || isTypingDone) {
-      return undefined;
+    if (logRef.current) {
+      logRef.current.scrollTop = logRef.current.scrollHeight;
+    }
+  }, [history]);
+
+  const commandNames = terminalCommands
+    .filter((entry) => !entry.hidden)
+    .map((entry) => entry.name)
+    .join("  ");
+
+  const runCommand = (raw) => {
+    const trimmed = raw.trim().slice(0, 60);
+    const word = trimmed.split(/\s+/)[0]?.toLowerCase();
+    if (!word) return;
+
+    setCmdHistory((prev) => [...prev, trimmed].slice(-50));
+    setHistoryIndex(-1);
+
+    if (word === "clear") {
+      setHistory([]);
+      return;
     }
 
-    let frame = 0;
-    let holdTimeout = 0;
-    let startTime = 0;
-    const duration = 1850;
-    const startDelay = 500;
-    const easeOutCubic = (value) => 1 - (1 - value) ** 3;
+    if (word === "help") {
+      setHistory((prev) =>
+        [
+          ...prev,
+          { type: "command", text: trimmed },
+          { type: "output", text: `Available commands: ${commandNames}  clear` },
+        ].slice(-200),
+      );
+      return;
+    }
 
-    const step = (timestamp) => {
-      if (!startTime) {
-        startTime = timestamp + startDelay;
+    const match = terminalCommands.find((entry) => entry.aliases.includes(word));
+
+    if (!match) {
+      setHistory((prev) =>
+        [
+          ...prev,
+          { type: "command", text: trimmed },
+          { type: "error", text: `bash: ${word}: command not found` },
+          { type: "output", text: "Type 'help' to see available commands." },
+        ].slice(-200),
+      );
+      return;
+    }
+
+    setHistory((prev) =>
+      [
+        ...prev,
+        { type: "command", text: trimmed },
+        ...match.output.map((line) => ({ type: "output", text: line })),
+      ].slice(-200),
+    );
+
+    if (match.href) {
+      window.setTimeout(() => {
+        document.querySelector(match.href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 400);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!value.trim()) return;
+    runCommand(value);
+    setValue("");
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      if (cmdHistory.length === 0) return;
+      const nextIndex = historyIndex === -1 ? cmdHistory.length - 1 : Math.max(0, historyIndex - 1);
+      setHistoryIndex(nextIndex);
+      setValue(cmdHistory[nextIndex]);
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      if (historyIndex === -1) return;
+      const nextIndex = historyIndex + 1;
+      if (nextIndex >= cmdHistory.length) {
+        setHistoryIndex(-1);
+        setValue("");
+      } else {
+        setHistoryIndex(nextIndex);
+        setValue(cmdHistory[nextIndex]);
       }
-
-      if (timestamp < startTime) {
-        frame = window.requestAnimationFrame(step);
-        return;
-      }
-
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      setTypingProgress(easeOutCubic(progress));
-
-      if (progress < 1) {
-        frame = window.requestAnimationFrame(step);
-        return;
-      }
-
-      holdTimeout = window.setTimeout(() => {
-        setIsTypingDone(true);
-      }, 260);
-    };
-
-    frame = window.requestAnimationFrame(step);
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.clearTimeout(holdTimeout);
-    };
-  }, [isTypingDone, startTyping]);
+    }
+  };
 
   return (
-    <div className="app-shell">
-      <div className="scene-grid" />
-      <div className="orb orb-a" />
-      <div className="orb orb-b" />
+    <div
+      className="rounded-xl2 border border-term-line bg-term-bg shadow-panel"
+      onClick={() => inputRef.current?.focus()}
+    >
+      <div className="flex items-center gap-2 border-b border-term-line px-5 py-3.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+        <span className="ml-3 font-mono text-xs text-term-green-dim">rishabh@plexus: ~</span>
+      </div>
 
-      <header className="site-header reveal" data-reveal>
-        <nav className="site-nav" aria-label="Primary">
-          <a href="#about">About</a>
-          <a href="#capabilities">Capabilities</a>
-          <a href="#work">Work</a>
-          <a href="#stack">Stack</a>
-          <a href="#resume">Resume</a>
-          <a href="#contact" className="button button-primary">
+      <div
+        ref={logRef}
+        className="term-scanlines h-72 overflow-y-auto p-5 font-mono text-xs leading-relaxed md:p-6 md:text-sm"
+      >
+        {history.map((line, index) => {
+          if (line.type === "command") {
+            return (
+              <div key={index} className="term-glow mt-2 flex gap-2 text-term-green first:mt-0">
+                <span>❯</span>
+                <span>{line.text}</span>
+              </div>
+            );
+          }
+
+          if (line.type === "system") {
+            return (
+              <p key={index} className="text-term-green-dim">
+                {line.text}
+              </p>
+            );
+          }
+
+          if (line.type === "error") {
+            return (
+              <p key={index} className="mt-1 pl-4 text-term-err">
+                {line.text}
+              </p>
+            );
+          }
+
+          return (
+            <p key={index} className="mt-1 pl-4 text-term-green-dim">
+              {line.text}
+            </p>
+          );
+        })}
+
+        <form onSubmit={handleSubmit} className="term-glow mt-2 flex items-center gap-2 text-term-green">
+          <span>❯</span>
+          <input
+            ref={inputRef}
+            value={value}
+            onChange={(event) => setValue(event.target.value)}
+            onKeyDown={handleKeyDown}
+            autoComplete="off"
+            autoCapitalize="off"
+            spellCheck="false"
+            maxLength={60}
+            aria-label="Terminal command input"
+            placeholder="type a command…"
+            className="flex-1 bg-transparent font-mono text-term-green caret-term-green outline-none placeholder:text-term-green-dim/70"
+          />
+          <span className="term-cursor h-4 w-2 bg-term-green" aria-hidden="true" hidden={value.length > 0} />
+        </form>
+      </div>
+
+      <p className="border-t border-term-line px-5 py-3 font-mono text-[11px] text-term-green-dim md:px-6">
+        Try: about · project · capabilities · stack · journey · contact · resume · hi · help
+      </p>
+    </div>
+  );
+}
+
+function App() {
+  useReveal();
+
+  return (
+    <div className="relative">
+      <div className="scene-grid" aria-hidden="true" />
+
+      <div className="relative mx-auto max-w-[1220px] px-5 pb-24 md:px-8">
+        <header className="reveal flex items-center justify-between py-6" data-reveal>
+          <a href="#top" className="font-mono text-sm tracking-wide text-ink">
+            rishabh<span className="text-signal">.</span>sec
+          </a>
+          <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href} className="font-mono text-sm text-muted transition hover:text-ink">
+                {link.label}
+              </a>
+            ))}
+            <a href="#contact" className={btnPrimary}>
+              Connect
+            </a>
+          </nav>
+          <a href="#contact" className={`${btnPrimary} md:hidden`}>
             Connect
           </a>
-        </nav>
-      </header>
+        </header>
 
-      <main id="top">
-        <section className="hero section">
-          <div className="hero-nameplate reveal" data-reveal data-hero-name>
-            <div className="eyebrow hero-name-kicker">Cybersecurity Portfolio</div>
-            <p className={`hero-name-intro ${isTypingDone ? "is-typed" : ""}`}>
-              <span className="hero-name-track" aria-label={heroName}>
-                <span
-                  className="hero-name-visible"
-                  style={{ width: `${typingProgress * 100}%` }}
+        <main id="top">
+          {/* HERO */}
+          <section className="grid gap-12 py-14 md:grid-cols-[1.05fr_0.95fr] md:items-center md:py-24">
+            <div className="reveal" data-reveal>
+              <span className="font-mono text-sm uppercase tracking-[0.16em] text-teal">
+                Network Security Portfolio
+              </span>
+
+              <h1 className="mt-5 flex items-center gap-2 font-display text-6xl font-semibold leading-none text-ink md:text-7xl">
+                <span>{heroName}</span>
+                <span className="type-caret h-12 md:h-14" aria-hidden="true" />
+              </h1>
+
+              <p className="mt-4 font-mono text-sm uppercase tracking-[0.18em] text-signal md:text-base">
+                Information Security Focused Developer
+              </p>
+
+              <p className="mt-5 max-w-lg text-base leading-relaxed text-muted md:text-lg">
+                Building secure systems with focus on Network Security, Threat Detection, and defensive
+                development practices.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a className={btnPrimary} href="mailto:rishabh.public.mail@gmail.com">
+                  Email me
+                </a>
+                <a
+                  className={btnSecondary}
+                  href="https://www.linkedin.com/in/rishabh-joshi-992834326/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  {heroName}
-                </span>
-                <span className="hero-name-ghost" aria-hidden="true">
-                  {heroName}
-                </span>
-                <span
-                  className="hero-name-caret"
-                  aria-hidden="true"
-                  style={{ left: `${typingProgress * 100}%` }}
-                />
-              </span>
-            </p>
-            <h1 className="hero-name-title">B.Tech CSE Student | Security-Focused Developer</h1>
-            <p className="hero-name-subtitle">
-              Full-stack and cybersecurity-oriented builder exploring modern threats,
-              secure applications, Android tooling, and defensive engineering foundations.
-            </p>
-          </div>
-
-          <div className="hero-copy reveal" data-reveal>
-            <div className="eyebrow">Overview</div>
-            <h1>
-              Building dependable software while going deeper into
-              <span className="headline-accent"> cybersecurity, systems, and edge-case behavior.</span>
-            </h1>
-            <p className="hero-text">
-              I am a B.Tech CSE student combining professional full-stack development with
-              security-focused learning. The goal is not only to build applications, but to
-              understand how they behave under pressure, how they fail, and how they can be made safer.
-            </p>
-
-            <div className="hero-actions">
-              <a className="button button-primary" href="mailto:rishabh.public.mail@gmail.com">
-                Email me
-              </a>
-              <a
-                className="button button-secondary"
-                href="https://www.linkedin.com/in/rishabh-joshi-992834326/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                LinkedIn
-              </a>
-              <a className="button button-secondary" href="#work">
-                Security project
-              </a>
-            </div>
-
-            <div className="signal-strip">
-              <span>Foundation</span>
-              <span>Cybersecurity</span>
-              <span>Android Security</span>
-              <span>Network Security</span>
-              <span>Full-Stack</span>
-              <span>Secure Development</span>
-            </div>
-          </div>
-
-          <div className="hero-stage reveal" data-reveal>
-            <div className="stage-panel panel-primary">
-              <div className="stage-panel-content">
-                <span className="mini-label">Current direction</span>
-                <h2>Professional engineering with a security research edge</h2>
-                <p>
-                  Balancing real software delivery with offensive security learning, Android tooling,
-                  network inspection, and foundation-first systems understanding.
-                </p>
-              </div>
-            </div>
-
-            <div className="hero-card-grid">
-              <div className="floating-card">
-                <span className="mini-label">Interests</span>
-                <strong>Mobile + IoT Security</strong>
-                <p>Studying practical attack surfaces beyond standard web app workflows.</p>
+                  LinkedIn
+                </a>
+                <a className={btnSecondary} href="#work">
+                  View Project Plexus
+                </a>
               </div>
 
-              <div className="floating-card">
-                <span className="mini-label">Builds</span>
-                <strong>Secure communication systems</strong>
-                <p>API-driven apps, secure notes, and Android-focused utility work.</p>
-              </div>
-
-              <div className="floating-card">
-                <span className="mini-label">Mindset</span>
-                <strong>Foundation first</strong>
-                <p>Strong fundamentals before noise, hype, or shallow tooling shortcuts.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="stats-row section reveal" data-reveal>
-          {quickStats.map((stat) => (
-            <article className="stat-card" key={stat.label}>
-              <strong>{stat.value}</strong>
-              <span>{stat.label}</span>
-            </article>
-          ))}
-        </section>
-
-        <section className="section split-layout" id="about">
-          <div className="section-copy reveal" data-reveal>
-            <div className="eyebrow">About Me</div>
-            <h2>Curiosity-driven security learning backed by practical software work.</h2>
-            <p>
-              I enjoy exploring the technical edges: weird traffic, system behavior,
-              overlooked flaws, and the kind of implementation details that matter when
-              secure software has to work in the real world.
-            </p>
-          </div>
-
-          <div className="pillar-grid">
-            {aboutPoints.map((point, index) => (
-              <article className="pillar-card reveal" data-reveal key={point}>
-                <span className="pillar-id">0{index + 1}</span>
-                <h3>{index === 0 ? "Research mindset" : index === 1 ? "Low-level curiosity" : index === 2 ? "Academic direction" : "Current builds"}</h3>
-                <p>{point}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section split-layout" id="capabilities">
-          <div className="section-copy reveal" data-reveal>
-            <div className="eyebrow">Capabilities</div>
-            <h2>Technical curiosity backed by practical software execution.</h2>
-            <p>
-              The site should reflect both sides of the profile: someone building real
-              software and someone intentionally growing into deeper cybersecurity and systems work.
-            </p>
-          </div>
-
-          <div className="pillar-grid">
-            {capabilities.map((item) => (
-              <article className="pillar-card reveal" data-reveal key={item.id}>
-                <span className="pillar-id">{item.id}</span>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section" id="work">
-          <div className="section-heading reveal" data-reveal>
-            <div className="eyebrow">Major Works</div>
-            <h2>Two security-focused builds that best represent my practical direction.</h2>
-            <p>
-              These projects show the kind of work I want to keep pushing deeper into:
-              traffic analysis, endpoint monitoring, and the practical overlap between
-              software engineering and cybersecurity research.
-            </p>
-          </div>
-
-          <div className="project-grid">
-            {majorWorks.map((project) => (
-              <article className="project-card reveal" data-reveal key={project.title}>
-                <div className="project-topbar">
-                  <div className="project-no">{project.label}</div>
-                  <a
-                    className="project-link-button"
-                    href={project.link}
-                    target="_blank"
-                    rel="noreferrer"
+              <div className="mt-10 flex flex-wrap gap-2">
+                {interests.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-line bg-panel px-3 py-1.5 font-mono text-xs text-muted"
                   >
-                    View on GitHub
-                  </a>
-                </div>
-                <h3>{project.title}</h3>
-                <p>{project.summary}</p>
-                <div className="project-detail-list">
-                  {project.details.map((detail) => (
-                    <p key={detail}>{detail}</p>
-                  ))}
-                </div>
-                <div className="tag-row">
-                  {project.tags.map((tag) => (
-                    <span className="tag" key={tag}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section stack-section" id="stack">
-          <div className="section-heading reveal" data-reveal>
-            <div className="eyebrow">Tech Stack</div>
-            <h2>Languages, frameworks, platforms, and security tooling.</h2>
-            <p>
-              The stack reflects both software delivery and security exploration, from
-              backend frameworks to Linux, Android, and network-oriented tooling.
-            </p>
-          </div>
-
-          <div className="stack-grid">
-            {techGroups.map((group) => (
-              <article className="stack-card reveal" data-reveal key={group.title}>
-                <span className="mini-label">{group.title}</span>
-                <div className="chip-grid">
-                  {group.items.map((item) => (
-                    <span className="tool-chip" key={item}>
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="interest-strip reveal" data-reveal>
-            {interests.map((item) => (
-              <span className="interest-pill" key={item}>
-                {item}
-              </span>
-            ))}
-          </div>
-        </section>
-
-        <section className="section" id="journey">
-          <div className="timeline-shell reveal" data-reveal>
-            <div className="section-heading timeline-heading">
-              <div className="eyebrow">Roadmap & Learning Path</div>
-              <h2>What the next stage of growth looks like.</h2>
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
 
-            <div className="timeline">
-              {roadmap.map((item) => (
-                <article className="timeline-item" key={item.title}>
-                  <span className="timeline-period">{item.period}</span>
+            {/* Signature element: interactive terminal nav */}
+            <div className="reveal" data-reveal>
+              <TerminalNav />
+            </div>
+          </section>
+
+          {/* STATS */}
+          <section className="grid gap-4 py-6 sm:grid-cols-3">
+            {quickStats.map((stat) => (
+              <article
+                key={stat.value}
+                className="reveal rounded-xl2 border border-line bg-panel p-6"
+                data-reveal
+              >
+                <strong className="font-display text-xl text-ink">{stat.value}</strong>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{stat.label}</p>
+              </article>
+            ))}
+          </section>
+
+          {/* ABOUT */}
+          <section className="grid gap-10 py-20 md:grid-cols-[0.9fr_1.1fr] md:gap-14" id="about">
+            <SectionHeading
+              eyebrow="About Me"
+              title="Curiosity-driven security learning backed by practical software work."
+              text="I enjoy exploring the technical edges: live traffic, system behavior, and the implementation details that matter when defensive software has to hold up in the real world."
+            />
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {aboutPoints.map((point, index) => (
+                <article
+                  key={point}
+                  className="reveal rounded-xl2 border border-line bg-panel p-6"
+                  data-reveal
+                >
+                  <span className="font-mono text-xs text-signal">{aboutPointTitles[index]}</span>
+                  <p className="mt-3 text-sm leading-relaxed text-ink">{point}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* CAPABILITIES */}
+          <section className="grid gap-10 py-20 md:grid-cols-[0.9fr_1.1fr] md:gap-14" id="capabilities">
+            <SectionHeading
+              eyebrow="Capabilities"
+              title="Technical curiosity backed by practical software execution."
+              text="Two threads run through this work: building real, working software, and pushing deliberately deeper into network security and defensive engineering."
+            />
+
+            <div className="grid gap-4">
+              {capabilities.map((item) => (
+                <article
+                  key={item.id}
+                  className="reveal flex gap-5 rounded-xl2 border border-line bg-panel p-6"
+                  data-reveal
+                >
+                  <span className="font-mono text-sm text-teal">{item.id}</span>
                   <div>
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
+                    <h3 className="text-lg font-semibold text-ink">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted">{item.text}</p>
                   </div>
                 </article>
               ))}
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="section resume-shell reveal" data-reveal id="resume">
-          <div className="resume-copy">
-            <div className="eyebrow">Resume</div>
-            <h2>Keep the portfolio open, or take the summary with you.</h2>
-            <p>
-              View the latest resume online or download the PDF directly for applications,
-              outreach, and profile sharing.
+          {/* WORK */}
+          <section className="py-20" id="work">
+            <SectionHeading
+              eyebrow="Major Works"
+              title="Security-focused builds that best represent my practical direction."
+              text="Real-time traffic analysis and detection systems, built to close the gap between security theory and running code."
+            />
+
+            <div className="mt-10 grid gap-6">
+              {majorWorks.map((project) => (
+                <article
+                  key={project.title}
+                  className={`reveal rounded-xl2 border p-6 md:p-8 ${
+                    project.featured
+                      ? "border-signal/30 bg-panel-strong shadow-panel"
+                      : "border-line bg-panel"
+                  }`}
+                  data-reveal
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-4">
+                    <span
+                      className={`font-mono text-sm uppercase tracking-[0.12em] ${
+                        project.featured ? "text-signal" : "text-teal"
+                      }`}
+                    >
+                      {project.label}
+                    </span>
+                    <a
+                      className="font-mono text-xs text-muted underline decoration-line-strong underline-offset-4 transition hover:text-ink"
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View on GitHub ↗
+                    </a>
+                  </div>
+
+                  <h3 className="mt-4 text-xl font-semibold text-ink md:text-2xl">{project.title}</h3>
+                  <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted md:text-base">
+                    {project.summary}
+                  </p>
+
+                  <div className="mt-5 grid gap-2 sm:grid-cols-2">
+                    {project.details.map((detail) => (
+                      <p key={detail} className="text-sm leading-relaxed text-ink/90">
+                        · {detail}
+                      </p>
+                    ))}
+                  </div>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-line bg-bg px-3 py-1 font-mono text-xs text-muted"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* STACK */}
+          <section className="py-20" id="stack">
+            <SectionHeading
+              eyebrow="Tech Stack"
+              title="Languages, frameworks, platforms, and security tooling."
+              text="A stack shaped by both software delivery and security exploration — from backend frameworks to packet-level tooling."
+            />
+
+            <div className="mt-10 grid gap-4 md:grid-cols-3">
+              {techGroups.map((group) => (
+                <article
+                  key={group.title}
+                  className="reveal rounded-xl2 border border-line bg-panel p-6"
+                  data-reveal
+                >
+                  <span className="font-mono text-sm uppercase tracking-[0.12em] text-muted">
+                    {group.title}
+                  </span>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full border border-line-strong bg-bg px-3 py-1.5 font-mono text-xs text-ink"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* JOURNEY / ROADMAP */}
+          <section className="py-20" id="journey">
+            <SectionHeading eyebrow="Roadmap & Learning Path" title="What the next stage of growth looks like." />
+
+            <div className="mt-10 space-y-4 border-l border-line pl-6 md:pl-10">
+              {roadmap.map((item) => (
+                <article key={item.title} className="reveal relative" data-reveal>
+                  <span className="absolute -left-[31px] top-1.5 h-2.5 w-2.5 rounded-full bg-signal md:-left-[47px]" />
+                  <span className="font-mono text-sm uppercase tracking-[0.12em] text-signal">{item.period}</span>
+                  <h3 className="mt-2 text-lg font-semibold text-ink">{item.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-muted">{item.text}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* RESUME */}
+          <section
+            className="reveal grid gap-6 rounded-xl2 border border-line bg-panel p-8 md:grid-cols-[1.2fr_0.8fr] md:items-center md:p-10"
+            data-reveal
+            id="resume"
+          >
+            <div>
+              <span className="font-mono text-sm uppercase tracking-[0.16em] text-teal">Resume</span>
+              <h2 className="mt-4 text-3xl font-semibold text-ink md:text-4xl">
+                Keep the portfolio open, or take the summary with you.
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-muted">
+                View the latest resume online or download the PDF directly for applications, outreach, and
+                profile sharing.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3 md:justify-end">
+              <a className={btnPrimary} href={resumeHref} target="_blank" rel="noopener noreferrer">
+                View resume
+              </a>
+              <a className={btnSecondary} href={resumeHref} download>
+                Download PDF
+              </a>
+            </div>
+          </section>
+
+          {/* CONTACT */}
+          <section className="reveal mt-8 py-16 text-center" data-reveal id="contact">
+            <span className="font-mono text-sm uppercase tracking-[0.16em] text-signal">Connect</span>
+            <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-semibold text-ink md:text-4xl">
+              Open to conversations around security, software, and ambitious builds.
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted">
+              Reach out for collaboration, project discussions, or opportunities in network security and
+              secure development.
             </p>
-            <span className="resume-note">
-              Place your PDF at <code>public/Rishabh_Resume.pdf</code> before deploy.
-            </span>
-          </div>
 
-          <div className="resume-actions">
-            <a
-              className="button button-primary"
-              href={resumeHref}
-              target="_blank"
-              rel="noreferrer"
-            >
-              View resume
-            </a>
-            <a className="button button-secondary" href={resumeHref} download>
-              Download PDF
-            </a>
-          </div>
-        </section>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <a className={btnPrimary} href="mailto:rishabh.public.mail@gmail.com">
+                Email
+              </a>
+              <a
+                className={btnSecondary}
+                href="https://www.linkedin.com/in/rishabh-joshi-992834326/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
+              <a className={btnSecondary} href="https://github.com/Rishabh4769" target="_blank" rel="noopener noreferrer">
+                GitHub
+              </a>
+            </div>
+          </section>
+        </main>
 
-        <section className="section contact-shell reveal" data-reveal id="contact">
-          <div className="contact-copy">
-            <div className="eyebrow">Connect</div>
-            <h2>Open to conversations around security, software, and ambitious builds.</h2>
-            <p>
-              Reach out for collaboration, project discussions, opportunities, or simply
-              to talk about cybersecurity, Android tooling, network security, and secure development.
-            </p>
-          </div>
-
-          <div className="contact-actions">
-            <a className="button button-primary" href="mailto:rishabh.public.mail@gmail.com">
-              Email
-            </a>
-            <a
-              className="button button-secondary"
-              href="https://www.linkedin.com/in/rishabh-joshi-992834326/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              LinkedIn
-            </a>
-            <a
-              className="button button-secondary"
-              href="https://github.com/Rishabh4769"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub
-            </a>
-            <a
-              className="button button-secondary"
-              href={resumeHref}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Resume
-            </a>
-          </div>
-        </section>
-      </main>
+        <footer className="mt-10 flex flex-col items-center gap-2 border-t border-line pt-8 text-center font-mono text-xs text-muted md:flex-row md:justify-between md:text-left">
+          <span>© {new Date().getFullYear()} Rishabh Joshi. Built with React &amp; Tailwind CSS.</span>
+          <span>Network Security · Full-Stack Development</span>
+        </footer>
+      </div>
     </div>
   );
 }
