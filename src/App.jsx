@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const resumeHref = "/Rishabh_Joshi_Resume.pdf";
+const resumeHref = "./Rishabh_Joshi_Resume.pdf";
 const heroName = "Rishabh";
 
 const navLinks = [
