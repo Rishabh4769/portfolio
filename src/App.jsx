@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const resumeHref = "/Rishabh_Resume.pdf";
+const resumeHref = "/Rishabh_Joshi_Resume.pdf";
 const heroName = "Rishabh";
 
 const navLinks = [
@@ -170,7 +170,7 @@ const terminalCommands = [
     aliases: ["hi", "hello", "hey", "yo"],
     href: null,
     hidden: true,
-    output: ["hi, i'm rishabh — b.tech cse, information security focused.", "type 'help' to see what this terminal can do."],
+    output: ["hi, i'm rishabh — information security focused developer. Feel free to explore the portfolio or reach out!"],
   },
   {
     name: "whoami",
