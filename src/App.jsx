@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const resumeHref = "./Rishabh_Joshi_Resume.pdf";
+const resumeHref = "/Rishabh_Resume.pdf";
 const heroName = "Rishabh";
 
 const navLinks = [
@@ -72,7 +72,7 @@ const majorWorks = [
   {
     featured: true,
     label: "Network Security · Featured Build",
-    link: "https://github.com/Rishabh4769",
+    link: "https://github.com/Rishabh4769/Project-Plexus",
     title: "Project Plexus",
     summary:
       "A real-time Network Intrusion Detection System that watches live traffic and flags attacks as they happen, combining a Scapy packet-capture engine with a trained ML classifier.",
@@ -86,7 +86,7 @@ const majorWorks = [
   {
     featured: false,
     label: "Network Security",
-    link: "https://github.com/Rishabh4769/Graduation-Projects/tree/main/Python-Projects/Packet-Sniffer",
+    link: "https://github.com/Rishabh4769/Projects/tree/main/Python-Projects/NetScope",
     title: "NetScope",
     summary:
       "Real-time capture, inspection, and alerting for network monitoring, anomaly spotting, and deeper packet-level understanding.",
@@ -170,7 +170,7 @@ const terminalCommands = [
     aliases: ["hi", "hello", "hey", "yo"],
     href: null,
     hidden: true,
-    output: ["hi, i'm rishabh — information security focused developer. Feel free to explore the portfolio or reach out!"],
+    output: ["hi, i'm rishabh — b.tech cse, information security focused.", "type 'help' to see what this terminal can do."],
   },
   {
     name: "whoami",
@@ -413,7 +413,17 @@ function App() {
 
       <div className="relative mx-auto max-w-[1220px] px-5 pb-24 md:px-8">
         <header className="reveal flex items-center justify-between py-6" data-reveal>
-          <a href="#top" className="font-mono text-sm tracking-wide text-ink">
+          <a href="#top" className="flex items-center gap-2.5 font-mono text-sm tracking-wide text-ink">
+            <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true" className="shrink-0">
+              <rect width="64" height="64" rx="15" fill="#0A0E14" />
+              <line x1="19" y1="45" x2="45" y2="45" stroke="#4C6072" strokeWidth="3" strokeLinecap="round" />
+              <line x1="19" y1="45" x2="32" y2="19" stroke="#4C6072" strokeWidth="3" strokeLinecap="round" />
+              <line x1="45" y1="45" x2="32" y2="19" stroke="#4C6072" strokeWidth="3" strokeLinecap="round" />
+              <circle cx="19" cy="45" r="6.5" fill="#4FD8C4" />
+              <circle cx="45" cy="45" r="6.5" fill="#4FD8C4" />
+              <circle cx="32" cy="19" r="9" fill="#FF9640" fillOpacity="0.22" />
+              <circle cx="32" cy="19" r="6.5" fill="#FF9640" />
+            </svg>
             rishabh<span className="text-signal">.</span>sec
           </a>
           <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
