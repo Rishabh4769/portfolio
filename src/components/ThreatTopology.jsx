@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
@@ -100,9 +100,19 @@ function Topology() {
 }
 
 export default function ThreatTopology() {
+  const wrap = useRef(null);
+  const [visible, setVisible] = useState(true);
+  useEffect(() => {
+    if (!wrap.current) return;
+    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { rootMargin: '80px' });
+    io.observe(wrap.current);
+    return () => io.disconnect();
+  }, []);
   return (
-    <Canvas camera={{ position: [0, 0, 5.4], fov: 42 }} dpr={[1, 1.75]} gl={{ antialias: true, alpha: true }}>
-      <Topology />
-    </Canvas>
+    <div ref={wrap} style={{ position: 'absolute', inset: 0 }}>
+      <Canvas camera={{ position: [0, 0, 5.4], fov: 42 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }} frameloop={visible ? 'always' : 'never'}>
+        <Topology />
+      </Canvas>
+    </div>
   );
 }

@@ -293,8 +293,8 @@ button { font: inherit; cursor: pointer; }
 .strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(16,16,19,.45); }
 .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
 .feat {
-  padding: 38px 32px; border-right: 1px solid var(--line); position: relative; 
-  transition: all .35s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 38px 32px; border-right: 1px solid var(--line); position: relative;
+  transition: background-color .35s cubic-bezier(0.16, 1, 0.3, 1), transform .35s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden; display: flex; flex-direction: column;
 }
 .feat:last-child { border-right: 0; }
@@ -575,6 +575,12 @@ button { font: inherit; cursor: pointer; }
    arrow (and content) never slides under it. Strip background stays full-bleed. */
 @media (min-width: 961px) {
   .feat-grid { padding-right: 68px; }
+}
+
+/* ============ performance: skip off-screen rendering on long pages ============ */
+.casefile, .strip {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 480px;
 }
 
 /* ============ responsive ============ */
