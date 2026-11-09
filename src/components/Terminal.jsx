@@ -179,7 +179,7 @@ action: emit_alert(severity="HIGH", tags=["credential-access", "triage-required"
           }
         }, 900);
       },
-      contact: () => { print('github — <span class="p">github.com/Rishabh4769</span><br>linkedin — <span class="p">linkedin.com/in/rishabh-joshi</span><br>email — <span class="p">contact@rishabhjoshi.dev</span>'); },
+      contact: () => { print('github — <span class="p">github.com/Rishabh4769</span><br>linkedin — <span class="p">linkedin.com/in/rishabh-joshi</span><br>email — <span class="p">contact@rishabh-joshi.in</span>'); },
       signal: () => { CMDS.contact(); },
       date: () => { print(esc(new Date().toString())); },
       echo: (a, args) => { print(esc(args.join(' ')) || ''); },
