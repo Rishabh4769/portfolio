@@ -67,6 +67,7 @@ export default function Signal() {
         {cards.map((c, i) => (
           <a
             className={'ld-row v' + (i + 1)}
+            style={{ '--i': i }}
             key={c.k}
             href={c.href}
             target="_blank"
@@ -74,13 +75,15 @@ export default function Signal() {
             download={c.download || undefined}
             aria-label={`${c.k}: ${c.v}`}
           >
-            <div className="ld-ch">{c.channel}<br />{c.status}</div>
+            <span className="ld-sheen" aria-hidden="true" />
+            <div className="ld-ch">{c.channel}<br /><span className="ld-dot" />{c.status}</div>
             <div>
               <div className="ld-k">{c.k}</div>
               <div className="ld-v">{c.v}</div>
               <p className="ld-d">{c.d}</p>
             </div>
             <span className="ld-glyph" aria-hidden="true">{['</>', 'in', '@', '§'][i]}</span>
+            {i === 3 && <span className="ld-stamp">AVAILABLE</span>}
             <span className="ld-act">{c.action} ↗</span>
           </a>
         ))}
