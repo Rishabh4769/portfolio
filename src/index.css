@@ -676,10 +676,16 @@ button { font: inherit; cursor: pointer; }
 
 /* signal ledger: each channel gets its own treatment */
 .ledger .ld-row { position: relative; overflow: hidden; }
+/* glyph gets its own grid column — it can never sit under the action button */
+.ledger .ld-row { grid-template-columns: 150px 1fr 84px auto; }
 .ld-glyph {
-  position: absolute; right: 148px; top: 50%; transform: translateY(-50%);
-  font-family: var(--font-display); font-weight: 700; font-size: 4rem; line-height: 1;
-  color: transparent; -webkit-text-stroke: 1px rgba(236,236,236,.13); pointer-events: none;
+  position: static; transform: none; display: grid; place-items: center; height: 100%;
+  font-family: var(--font-display); font-weight: 700; font-size: 2.5rem; line-height: 1;
+  color: transparent; -webkit-text-stroke: 1px rgba(236,236,236,.22); pointer-events: none;
+}
+@media (max-width: 1020px) {
+  .ledger .ld-row { grid-template-columns: 118px 1fr 58px auto; gap: 16px; }
+  .ld-glyph { font-size: 1.9rem; }
 }
 .ld-row.v1 { background-image: repeating-linear-gradient(0deg, rgba(236,236,236,.028) 0 1px, transparent 1px 5px); border-left: 3px solid var(--blue); }
 .ld-row.v2::before, .ld-row.v2::after { content: ''; position: absolute; width: 16px; height: 16px; border: 2px solid var(--blue-hi); }
