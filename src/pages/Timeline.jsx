@@ -1,13 +1,26 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SectionHead from '../components/SectionHead';
 import { TIMELINE } from '../data/content';
+
+/* Pixel snake: the connecting line is NOT pre-drawn. It is built from pixel
+   blocks sampled along an invisible S-curve through the event nodes. Each
+   block starts scattered at a small random offset and flies into place as
+   scrolling brings it near — so the snake assembles ahead of the reader and
+   never sits on top of unread content. */
+const rnd = (i, salt) => {
+  const x = Math.sin(i * 127.1 + salt * 311.7) * 43758.5453;
+  return x - Math.floor(x);
+};
 
 export default function Timeline() {
   const snakeRef = useRef(null);
   const pathRef = useRef(null);
+  const blockRefs = useRef([]);
+  const [blocks, setBlocks] = useState([]);
 
+  /* measure nodes -> build invisible path -> sample pixel blocks along it */
   useEffect(() => {
-    const draw = () => {
+    const build = () => {
       const box = snakeRef.current;
       const path = pathRef.current;
       if (!box || !path) return;
@@ -30,12 +43,65 @@ export default function Timeline() {
       const last = dots[dots.length - 1];
       d += ` L ${last.x} ${last.y + 34}`;
       path.setAttribute('d', d);
+
+      const total = path.getTotalLength();
+      const n = Math.max(56, Math.floor(total / 13));
+      const pts = [];
+      for (let i = 0; i <= n; i++) {
+        const pt = path.getPointAtLength((total * i) / n);
+        let node = false;
+        for (const dt of dots) {
+          if (Math.hypot(pt.x - dt.x, pt.y - dt.y) < 9) { node = true; break; }
+        }
+        pts.push({
+          x: pt.x,
+          y: pt.y,
+          dx: (rnd(i, 1) - 0.5) * 92,
+          dy: (rnd(i, 2) - 0.5) * 60,
+          hi: i % 6 === 3,
+          node,
+        });
+      }
+      setBlocks(pts);
     };
-    draw();
-    const t = setTimeout(draw, 350);
-    window.addEventListener('resize', draw);
-    return () => { clearTimeout(t); window.removeEventListener('resize', draw); };
+    build();
+    const t = setTimeout(build, 400);
+    window.addEventListener('resize', build);
+    return () => { clearTimeout(t); window.removeEventListener('resize', build); };
   }, []);
+
+  /* scroll driver: activate blocks as the reading line passes them */
+  useEffect(() => {
+    if (!blocks.length) return;
+    let raf = 0;
+    const drive = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const box = snakeRef.current;
+        if (!box) return;
+        const br = box.getBoundingClientRect();
+        const vh = window.innerHeight;
+        blocks.forEach((b, i) => {
+          const el = blockRefs.current[i];
+          if (!el) return;
+          const screenY = br.top + b.y;
+          const on = screenY < vh * 0.68;
+          el.style.opacity = on ? '1' : '0';
+          el.style.transform = on
+            ? 'translate(0px, 0px)'
+            : `translate(${b.dx}px, ${b.dy}px)`;
+        });
+      });
+    };
+    drive();
+    window.addEventListener('scroll', drive, { passive: true });
+    window.addEventListener('resize', drive);
+    return () => {
+      window.removeEventListener('scroll', drive);
+      window.removeEventListener('resize', drive);
+      cancelAnimationFrame(raf);
+    };
+  }, [blocks]);
 
   return (
     <div className="wrap">
@@ -44,10 +110,20 @@ export default function Timeline() {
         eyebrow="Chain of events"
         title="How we"
         out="got here"
-        body="Phases, not padding. Every entry below is something actually built, shipped, or underway — filed along one winding line, left, right, left."
+        body="Phases, not padding. Every entry below is something actually built, shipped, or underway."
       />
       <div className="snake" ref={snakeRef}>
-        <svg aria-hidden="true"><path className="snake-path" ref={pathRef} d="" /></svg>
+        <svg aria-hidden="true" style={{ visibility: 'hidden' }}>
+          <path ref={pathRef} d="" />
+        </svg>
+        {blocks.map((b, i) => (
+          <span
+            key={i}
+            ref={(el) => { blockRefs.current[i] = el; }}
+            className={'pxb' + (b.node ? ' node' : b.hi ? ' hi' : '')}
+            style={{ left: b.x + 'px', top: b.y + 'px', transform: `translate(${b.dx}px, ${b.dy}px)` }}
+          />
+        ))}
         {TIMELINE.map((t, i) => {
           const side = i % 2 === 0 ? 'left' : 'right';
           const card = (

@@ -1,8 +1,19 @@
+import { useEffect, useRef } from 'react';
 import SectionHead from '../components/SectionHead';
 import Reveal from '../components/Reveal';
 import { CAPABILITIES, TOOLS } from '../data/content';
 
 export default function Capabilities() {
+  const gridRef = useRef(null);
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { el.classList.add('inview'); io.disconnect(); }
+    }, { threshold: 0.15 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   return (
     <div className="wrap">
       <SectionHead
@@ -12,16 +23,16 @@ export default function Capabilities() {
         out="can do"
         body="Self-assessed, evidence-linked. Every meter below points at a build or a drill that earned it — nothing here is vibes."
       />
-      <div className="cap-grid">
+      <div className="cap-grid" ref={gridRef}>
         {CAPABILITIES.map((cap, i) => (
           <Reveal key={cap.k} delay={(i % 2) * 110}>
             <div className="cap-card">
               <span className="k">{cap.k}</span>
               <h3>{cap.title}</h3>
-              {cap.meters.map(([label, pct]) => (
+              {cap.meters.map(([label, pct], mi) => (
                 <div className="meter" key={label}>
                   <div className="row"><span>{label}</span><span>{pct}%</span></div>
-                  <div className="bar"><i style={{ width: pct + '%' }} /></div>
+                  <div className="bar"><i style={{ '--w': pct + '%', transitionDelay: (mi * 0.14) + 's' }} /></div>
                 </div>
               ))}
               <p className="cap-note">{cap.note}</p>

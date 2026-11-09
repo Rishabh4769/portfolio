@@ -64,9 +64,9 @@ export default function Signal() {
       />
 
       <div className="ledger">
-        {cards.map((c) => (
+        {cards.map((c, i) => (
           <a
-            className="ld-row"
+            className={'ld-row v' + (i + 1)}
             key={c.k}
             href={c.href}
             target="_blank"
@@ -80,6 +80,7 @@ export default function Signal() {
               <div className="ld-v">{c.v}</div>
               <p className="ld-d">{c.d}</p>
             </div>
+            <span className="ld-glyph" aria-hidden="true">{['</>', 'in', '@', '§'][i]}</span>
             <span className="ld-act">{c.action} ↗</span>
           </a>
         ))}

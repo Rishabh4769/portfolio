@@ -28,6 +28,20 @@ function ScrollToTop() {
   return null;
 }
 
+function VisitorCount() {
+  const [n, setN] = useState(null);
+  useEffect(() => {
+    let dead = false;
+    fetch('https://abacus.jasoncameron.dev/hit/rishabh-joshi-in/visits')
+      .then((r) => r.json())
+      .then((j) => { if (!dead && typeof j.value === 'number') setN(j.value); })
+      .catch(() => {});
+    return () => { dead = true; };
+  }, []);
+  if (n === null) return null;
+  return <span className="visit-count">FILE ACCESS LOG — {String(n).padStart(6, '0')} VISITS</span>;
+}
+
 function ScrollProgress() {
   const ref = useRef(null);
   useEffect(() => {
@@ -98,6 +112,7 @@ function Shell() {
         <footer className="footer">
           <div className="footer-inner">
             <span className="sig">© 2026 <b>RISHABH JOSHI</b> — ALL SIGNALS MONITORED</span>
+            <VisitorCount />
             <span>CLEARANCE: PUBLIC · REV 2026.09</span>
           </div>
         </footer>
