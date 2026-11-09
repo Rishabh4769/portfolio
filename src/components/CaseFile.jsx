@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import Reveal from './Reveal';
 
 export default function CaseFile({ c, flashId }) {
-  const [tab, setTab] = useState('brief');
   const dotColor = c.statusClass === 'ship' ? 'var(--green)' : 'var(--amber)';
 
   return (
@@ -13,40 +11,20 @@ export default function CaseFile({ c, flashId }) {
             <span className="dot" style={{ background: dotColor }} />
             <span>{c.no} — {c.status}</span>
           </div>
-          {c.arch && (
-            <div className="cf-tabs">
-              <button
-                type="button"
-                className={`cf-tab-btn ${tab === 'brief' ? 'active' : ''}`}
-                onClick={() => setTab('brief')}
-              >
-                BRIEF
-              </button>
-              <button
-                type="button"
-                className={`cf-tab-btn ${tab === 'arch' ? 'active' : ''}`}
-                onClick={() => setTab('arch')}
-              >
-                ARCHITECTURE
-              </button>
-            </div>
-          )}
+          
           <span className="cf-eyes">EYES: PUBLIC</span>
         </div>
         <div className="cf-body">
           <div>
             <h3 className="cf-title">{c.title}</h3>
             <p className="cf-sub">{c.sub}</p>
-            {tab === 'brief' ? (
-              <>
-                <p className="cf-desc" dangerouslySetInnerHTML={{ __html: c.desc }} />
-                <dl className="cf-meta">
-                  {c.meta.map(([k, v]) => (
-                    <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
-                  ))}
-                </dl>
-              </>
-            ) : (
+            <p className="cf-desc" dangerouslySetInnerHTML={{ __html: c.desc }} />
+            <dl className="cf-meta">
+              {c.meta.map(([k, v]) => (
+                <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+              ))}
+            </dl>
+            {c.arch && (
               <div className="cf-arch-wrapper">
                 <div className="cf-arch-head">PIPELINE SCHEMATIC &amp; TELEMETRY</div>
                 <pre className="cf-arch-diagram">{c.arch}</pre>

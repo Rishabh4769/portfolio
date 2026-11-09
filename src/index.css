@@ -583,6 +583,73 @@ button { font: inherit; cursor: pointer; }
   contain-intrinsic-size: auto 480px;
 }
 
+/* ============ chapter system (long-page redesign) ============ */
+.progress {
+  position: fixed; top: var(--nav-h); left: 0; height: 2px; width: 100%;
+  background: var(--blue); z-index: 51; transform-origin: 0 50%; transform: scaleX(0);
+}
+.band {
+  background: var(--blue); color: #fff; font-family: var(--font-mono);
+  font-size: .64rem; letter-spacing: .26em; padding: 9px 14px; margin: 64px 0 0;
+  display: flex; justify-content: space-between; gap: 18px; overflow: hidden; white-space: nowrap;
+}
+.endmark {
+  font-family: var(--font-mono); font-size: .64rem; letter-spacing: .24em;
+  color: var(--faint); text-align: center; padding: 56px 0 6px;
+}
+.endmark b { color: var(--blue-hi); }
+
+/* case chapters: sticky evidence column */
+@media (min-width: 961px) {
+  .cf-side { position: sticky; top: calc(var(--nav-h) + 22px); align-self: start; }
+}
+
+/* capabilities as single-column chapters */
+.cap-grid { grid-template-columns: 1fr; max-width: 880px; }
+.tools-index { border: 1px solid var(--line); font-family: var(--font-mono); font-size: .8rem; max-width: 880px; }
+.tools-index .trow { display: flex; justify-content: space-between; padding: 12px 18px; border-bottom: 1px solid var(--line-soft); color: var(--paper-dim); }
+.tools-index .trow:last-child { border-bottom: 0; }
+.tools-index .trow i { color: var(--faint); font-style: normal; }
+
+/* signal ledger */
+.ledger { border: 1px solid var(--line); }
+.ledger .ld-row {
+  display: grid; grid-template-columns: 150px 1fr auto; gap: 22px; align-items: center;
+  padding: 28px clamp(20px, 4vw, 38px); border-bottom: 1px solid var(--line);
+  background: var(--bg2); text-decoration: none;
+}
+.ledger .ld-row:last-child { border-bottom: 0; }
+.ledger .ld-ch { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .18em; color: var(--faint); line-height: 1.9; }
+.ledger .ld-k { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .26em; color: var(--blue-hi); }
+.ledger .ld-v { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.15rem, 2.4vw, 1.7rem); color: var(--paper); }
+.ledger .ld-d { color: var(--muted); font-size: .88rem; margin-top: 4px; max-width: 52ch; }
+.ledger .ld-act { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .14em; border: 1px solid var(--blue); color: var(--blue-hi); padding: 11px 18px; text-transform: uppercase; white-space: nowrap; }
+@media (max-width: 760px) { .ledger .ld-row { grid-template-columns: 1fr; } }
+
+/* snake timeline */
+.snake { position: relative; padding: 12px 0 8px; margin: 12px 0 70px; }
+.snake svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.snake-path { fill: none; stroke: var(--blue); stroke-width: 2; opacity: .5; }
+.sn-row { display: grid; grid-template-columns: 1fr 76px 1fr; align-items: center; margin-bottom: 58px; position: relative; z-index: 1; }
+.sn-row:last-child { margin-bottom: 6px; }
+.sn-card { background: var(--bg2); border: 1px solid var(--line); padding: 26px 28px; max-width: 470px; }
+.sn-row.left .sn-card { grid-column: 1; justify-self: end; text-align: right; box-shadow: -8px 8px 0 var(--blue-deep); }
+.sn-row.right .sn-card { grid-column: 3; justify-self: start; box-shadow: 8px 8px 0 var(--blue-deep); }
+.sn-date { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .26em; color: var(--blue-hi); }
+.sn-card h3 { font-family: var(--font-display); font-size: 1.35rem; text-transform: uppercase; margin: 7px 0 6px; }
+.sn-card p { color: var(--muted); font-size: .9rem; }
+.sn-card p strong { color: var(--paper); }
+.sn-row.now .sn-card { border-color: var(--blue); }
+.sn-row.now .sn-card h3 { color: var(--blue-hi); }
+.sn-dot { grid-column: 2; justify-self: center; width: 17px; height: 17px; background: var(--bg); border: 2px solid var(--blue-hi); transform: rotate(45deg); z-index: 2; }
+.sn-row.now .sn-dot { background: var(--blue); }
+@media (max-width: 760px) {
+  .sn-row { grid-template-columns: 1fr; margin-bottom: 40px; }
+  .sn-row.left .sn-card, .sn-row.right .sn-card { grid-column: 1; justify-self: stretch; text-align: left; max-width: none; box-shadow: 8px 8px 0 var(--blue-deep); }
+  .sn-dot { position: absolute; left: -9px; top: 30px; }
+  .snake { padding-left: 26px; }
+}
+
 /* ============ responsive ============ */
 @media (max-width: 960px) {
   .nav-links, .nav-cta { display: none; }

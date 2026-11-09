@@ -29,12 +29,16 @@ export default function Capabilities() {
           </Reveal>
         ))}
       </div>
+      <div className="band"><span>ARSENAL — TOOLS IN ROTATION</span><span>{TOOLS.length} ENTRIES</span></div>
       <Reveal>
-        <div className="eyebrow" style={{ marginTop: 54 }}>Arsenal — tools in rotation</div>
-        <div className="tools">
-          {TOOLS.map((t) => <span className="chip" key={t}>{t}</span>)}
+        <div className="eyebrow" style={{ marginTop: 40 }}>Arsenal — tools in rotation</div>
+        <div className="tools-index">
+          {TOOLS.map((t, i) => (
+            <div className="trow" key={t}><span>{t}</span><i>{String(i + 1).padStart(2, '0')} / {TOOLS.length}</i></div>
+          ))}
         </div>
       </Reveal>
+      <p className="endmark">— END OF CAPABILITIES · <b>ARSENAL LOGGED</b> —</p>
       <div style={{ height: 40 }} />
     </div>
   );

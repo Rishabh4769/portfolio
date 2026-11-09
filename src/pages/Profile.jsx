@@ -61,6 +61,8 @@ export default function Profile() {
         </Reveal>
       </div>
 
+      <div className="band"><span>THE RECORD</span><span>BY THE NUMBERS</span></div>
+      <div style={{ height: 34 }} />
       <Reveal>
         <div className="stat-row">
           <div className="stat"><b>03</b><span>CASES FILED</span></div>
@@ -69,6 +71,7 @@ export default function Profile() {
           <div className="stat"><b>02</b><span>BUILDS SHIPPED</span></div>
         </div>
       </Reveal>
+      <p className="endmark">— END OF PROFILE · <b>SUBJECT IDENTIFIED</b> —</p>
       <div style={{ height: 40 }} />
     </div>
   );

@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import Reveal from '../components/Reveal';
 import { CASES } from '../data/content';
+import CaseFile from '../components/CaseFile';
 
 const ThreatTopology = lazy(() => import('../components/ThreatTopology'));
 
@@ -62,31 +63,22 @@ export default function Dossier() {
         <div className="scrollcue">SCROLL</div>
       </section>
 
-      <section className="strip">
-        <div className="feat-grid">
-          {CASES.map((c, i) => (
-            <Reveal key={c.id} delay={i * 90}>
-              <Link className="feat" to="/operations">
-                <span className="go">↗</span>
-                <span className="no">{c.no}</span>
-                <h3>{c.title}</h3>
-                <p>{c.sub}</p>
-                {c.stack && (
-                  <div className="feat-stack">
-                    {c.stack.slice(0, 3).map(tech => <span key={tech}>{tech}</span>)}
-                    {c.stack.length > 3 && <span>+{c.stack.length - 3}</span>}
-                  </div>
-                )}
-                <div style={{ flex: 1 }} />
-                <span className={'st ' + c.statusClass}>{c.status}</span>
-              </Link>
-            </Reveal>
-          ))}
+      <section className="wrap">
+        <div className="band"><span>CHAPTER 01 — SELECTED WORK</span><span>CASE FILES 001–003</span></div>
+        <div className="sec-head">
+          <div className="eyebrow">Selected work</div>
+          <h2>Case <span className="out">files</span></h2>
+          <p>Three builds, filed as chapters. Each one gets its full evidence spread — architecture, features, and the record.</p>
         </div>
+        {CASES.map((c) => (
+          <CaseFile key={c.id} c={c} />
+        ))}
       </section>
 
       {/* ——— Approach / doctrine ——— */}
-      <section className="wrap" style={{ paddingTop: 54, paddingBottom: 0 }}>
+      <section className="wrap" style={{ paddingTop: 10, paddingBottom: 0 }}>
+        <div className="band" style={{ marginTop: 30 }}><span>CHAPTER 02 — DOCTRINE</span><span>HOW THE WORK GETS DONE</span></div>
+        <div style={{ height: 40 }} />
         <Reveal>
           <div className="eyebrow">Operational doctrine</div>
         </Reveal>
@@ -129,6 +121,7 @@ export default function Dossier() {
             <Link className="btn btn-g" to="/timeline">See the timeline</Link>
           </div>
         </Reveal>
+        <p className="endmark">— END OF DOSSIER · <b>FILE № 001</b> —</p>
       </section>
     </>
   );

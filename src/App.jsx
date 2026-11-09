@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import Frame from './components/Frame';
@@ -28,6 +28,26 @@ function ScrollToTop() {
   return null;
 }
 
+function ScrollProgress() {
+  const ref = useRef(null);
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const h = document.documentElement;
+        const max = h.scrollHeight - h.clientHeight;
+        if (ref.current) ref.current.style.transform = `scaleX(${max > 0 ? h.scrollTop / max : 0})`;
+      });
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); cancelAnimationFrame(raf); };
+  }, []);
+  return <div className="progress" ref={ref} aria-hidden="true" />;
+}
+
 function Shell() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
@@ -37,6 +57,7 @@ function Shell() {
     <>
       <div className="noise" aria-hidden="true" />
       <div className="grid-bg" aria-hidden="true" />
+      <ScrollProgress />
       <Suspense fallback={null}>
         <Background3D />
       </Suspense>

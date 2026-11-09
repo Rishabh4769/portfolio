@@ -63,51 +63,30 @@ export default function Signal() {
         body="Pick a channel below — or skip the formalities and interrogate the dossier directly in the terminal."
       />
 
-      <div className="contact-grid">
-        {cards.map((c, i) => {
-          const content = (
-            <>
-              <div className="contact-card-top">
-                <div className="contact-card-id">
-                  <svg className="contact-icon" width="22" height="22">
-                    <use href={`/icons.svg#${c.icon}`} />
-                  </svg>
-                  <span className="k">{c.channel}</span>
-                </div>
-                <span className="contact-badge">
-                  {c.action} <span className="arrow">↗</span>
-                </span>
-              </div>
-              <div className="contact-card-main">
-                <div className="v">{c.v}</div>
-                <div className="contact-sub">{c.sub}</div>
-                <p className="d">{c.d}</p>
-              </div>
-              <div className="contact-card-footer">
-                <span className="contact-link-label">
-                  {c.footerLabel || `Redirect to ${c.k}`}
-                </span>
-                <span className="contact-status-tag">{c.status}</span>
-              </div>
-            </>
-          );
-
-          return (
-            <Reveal key={c.k} delay={i * 80}>
-              <a
-                className="contact-card"
-                href={c.href}
-                target="_blank"
-                rel="noreferrer"
-                download={c.download || undefined}
-                aria-label={`${c.k}: ${c.v}`}
-              >
-                {content}
-              </a>
-            </Reveal>
-          );
-        })}
+      <div className="ledger">
+        {cards.map((c) => (
+          <a
+            className="ld-row"
+            key={c.k}
+            href={c.href}
+            target="_blank"
+            rel="noreferrer"
+            download={c.download || undefined}
+            aria-label={`${c.k}: ${c.v}`}
+          >
+            <div className="ld-ch">{c.channel}<br />{c.status}</div>
+            <div>
+              <div className="ld-k">{c.k}</div>
+              <div className="ld-v">{c.v}</div>
+              <p className="ld-d">{c.d}</p>
+            </div>
+            <span className="ld-act">{c.action} ↗</span>
+          </a>
+        ))}
       </div>
+
+      <div className="band"><span>DIRECT LINE — THE DOSSIER ANSWERS</span><span>TERMINAL</span></div>
+      <div style={{ height: 34 }} />
 
       <Reveal>
         <div className="eyebrow">Direct line — the dossier answers</div>
@@ -116,6 +95,7 @@ export default function Signal() {
           TRY — ls · nmap · ping · rules · theme amber · scan · cat operations/plexus/brief.txt · stats
         </div>
       </Reveal>
+      <p className="endmark">— END OF SIGNAL · <b>CHANNEL OPEN</b> —</p>
       <div style={{ height: 40 }} />
     </div>
   );
