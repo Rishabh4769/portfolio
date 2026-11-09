@@ -9,9 +9,9 @@ export const LINKS = {
 };
 
 export const TICKER_ITEMS = [
-  { t: 'PLEXUS v3.0.0 — shipped', c: 'ok' },
+  { t: 'PLEXUS v3.0.2 — shipped', c: 'ok' },
   { t: 'KRONOS — active build · 210 tests green', c: 'wr' },
-  { t: 'NETSCOPE — packet sniffer live', c: '' },
+  { t: 'NETSCOPE v2 — FastAPI + React monitor', c: '' },
   { t: 'clearance: public', c: '' },
   { t: 'subject: RISHABH JOSHI', c: 'ok' },
 ];
@@ -42,7 +42,7 @@ export const CASES = [
                              │
                  [React Triage Dashboard]`,
     meta: [
-      ['VERSION', 'v3.0.0'],
+      ['VERSION', 'v3.0.2'],
       ['ROLE', 'Sole builder'],
       ['DETECTION', 'Rules + XGBoost'],
       ['DATASET', 'CICIDS2017'],
@@ -103,38 +103,43 @@ export const CASES = [
     id: 'netscope',
     no: 'CASE 003',
     title: 'NETSCOPE',
-    sub: 'A network packet sniffer for seeing what the wire sees.',
+    sub: 'A professional network traffic monitor and anomaly detector.',
     status: 'SHIPPED',
     statusClass: 'ship',
-    desc: 'NETSCOPE captures and dissects network packets so you can watch traffic the way an analyst does — <strong>protocol by protocol, packet by packet</strong>. It was the first tool in the dossier and the reason packet-level thinking runs through everything built since.',
-    arch: `[NETWORK INTERFACE (eth0/wlan0)]
-              │
-              ▼
-       AF_PACKET Socket
-              │
-              ▼
-     Layer 2: Ethernet Frame Header Check (MAC / EtherType)
-              │
-              ▼
-     Layer 3: IPv4 / IPv6 Header Deconstruction (TTL, TOS)
-              │
-              ▼
-     Layer 4: TCP / UDP / ICMP Protocol Dissection
-              │
-              ▼
- [Live Terminal TUI / Packet Hex Dump Stream]`,
+    desc: 'NETSCOPE captures and dissects live traffic so you can watch the wire the way an analyst does — <strong>protocol by protocol, packet by packet</strong>. It began as a single-file Tkinter app; <strong>v2 rebuilt it properly</strong> — a FastAPI backend with the sniffer decoupled from the UI, and a React frontend with live tables, charts and session history. The original Tkinter build is preserved in the repo as <strong>netscope.py</strong>.',
+    arch: `[NETWORK INTERFACE] ──> Scapy PacketSniffer
+                        (backend/sniffer.py)
+                                  │
+                                  ▼
+                     SQLite Store (packets · alerts
+                     · sessions — parameterised)
+                                  │
+                                  ▼
+                  FastAPI — REST /api/* + WebSocket
+                                  │
+                 ┌────────────────┴────────────────┐
+                 ▼                                 ▼
+        [React Frontend]                  [PDF Reports]
+     Dashboard · PacketTable            (ReportLab export)
+     AlertTable · TrafficChart
+     Sessions browser
+
+     v1 Tkinter app preserved as netscope.py`,
     meta: [
-      ['VERSION', 'v1.0'],
+      ['VERSION', 'v2.0'],
       ['ROLE', 'Sole builder'],
-      ['FOCUS', 'Packet capture'],
-      ['STATUS', 'Shipped'],
+      ['STACK', 'FastAPI + React'],
+      ['ORIGIN', 'Tkinter v1 — preserved'],
     ],
     feats: [
-      'Live packet capture and dissection',
-      'Protocol-level traffic breakdown',
-      'Foundation for the PLEXUS detection work',
+      'Live packet capture and protocol dissection (Scapy)',
+      'Filterable live packet and alert tables',
+      'Traffic charting and dashboard stat cards',
+      'Historical sessions browser',
+      'PDF report generation (ReportLab)',
+      'One-command launcher — NetScope.sh',
     ],
-    stack: ['Python', 'Scapy'],
+    stack: ['Python', 'Scapy', 'FastAPI', 'React', 'SQLite', 'ReportLab'],
     links: [{ label: 'GitHub profile', href: LINKS.github }],
   },
 ];
@@ -196,7 +201,7 @@ export const TIMELINE = [
   {
     date: 'PHASE 02 — FIRST DETECTIONS',
     title: 'NetScope — see the wire',
-    body: 'A packet sniffer built to watch traffic protocol by protocol. First shipped tool; taught packet-level thinking that runs through everything since.',
+    body: 'A packet sniffer built to watch traffic protocol by protocol — first a Tkinter desktop app, later rebuilt as NetScope v2 with a FastAPI backend and React frontend. First shipped tool; taught packet-level thinking that runs through everything since.',
   },
   {
     date: 'SEPTEMBER 2026',
@@ -225,7 +230,7 @@ Real-time network intrusion detection.
 Rule-based fast path (port scans, floods) +
 XGBoost slow path trained on CICIDS2017.
 React dashboard · PCAP analysis · Night-Dossier PDFs.
-STATUS: SHIPPED v3.0.0
+STATUS: SHIPPED v3.0.2
 → github.com/Rishabh4769/Project-Plexus`,
     },
     'kronos': {
@@ -239,9 +244,10 @@ STATUS: ACTIVE BUILD`,
     'netscope': {
       'brief.txt':
 `CASE 003 — NETSCOPE
-Network packet sniffer.
-Live capture · protocol dissection.
-STATUS: SHIPPED`,
+Network traffic monitor and anomaly detector.
+FastAPI + React (v2) · live capture · sessions · PDF reports.
+v1 Tkinter original preserved as netscope.py.
+STATUS: SHIPPED v2.0`,
     },
   },
   'profile': {

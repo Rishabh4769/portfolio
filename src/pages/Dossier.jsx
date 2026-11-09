@@ -36,7 +36,7 @@ export default function Dossier() {
           <div className="leader" />
           <div className="box">
             <b>FIELD NOTE 01</b>
-            Network IDS with ML —<br />shipped v3.0.0
+            Network IDS with ML —<br />shipped v3.0.2
           </div>
         </div>
         <div className="anno anno-a2">
