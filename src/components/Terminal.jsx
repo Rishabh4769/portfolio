@@ -153,10 +153,10 @@ action: emit_alert(severity="HIGH", tags=["credential-access", "triage-required"
       theme: (a) => {
         const t = (a || '').toLowerCase().trim();
         if (!['blue', 'green', 'amber', 'red'].includes(t)) {
-          print('usage: theme &lt;blue | green | amber | red&gt;', 'warn');
+          print('usage: theme &lt;red | green | amber | blue&gt;', 'warn');
           return;
         }
-        if (t === 'blue') {
+        if (t === 'red') {
           document.documentElement.removeAttribute('data-theme');
         } else {
           document.documentElement.setAttribute('data-theme', t);

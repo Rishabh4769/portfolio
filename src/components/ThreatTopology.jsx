@@ -69,20 +69,20 @@ function Topology() {
     <group ref={group}>
       <mesh>
         <icosahedronGeometry args={[1.1, 1]} />
-        <meshBasicMaterial color="#3a3aff" wireframe transparent opacity={0.85} />
+        <meshBasicMaterial color="#b3001b" wireframe transparent opacity={0.85} />
       </mesh>
       <mesh>
         <icosahedronGeometry args={[0.4, 0]} />
-        <meshBasicMaterial color="#3a3aff" transparent opacity={0.9} />
+        <meshBasicMaterial color="#b3001b" transparent opacity={0.9} />
       </mesh>
       {nodes.map((p, i) => (
         <mesh key={i} position={p}>
           <sphereGeometry args={[0.055, 12, 12]} />
-          <meshBasicMaterial color="#8f95ff" />
+          <meshBasicMaterial color="#e5484d" />
         </mesh>
       ))}
       <lineSegments geometry={linkGeo}>
-        <lineBasicMaterial color="#3a3aff" transparent opacity={0.32} />
+        <lineBasicMaterial color="#b3001b" transparent opacity={0.32} />
       </lineSegments>
       {[0, 1, 2].map((i) => (
         <mesh key={'threat-' + i} ref={(el) => { threatRefs.current[i] = el; }}>
@@ -92,9 +92,9 @@ function Topology() {
       ))}
       <mesh ref={pulse} rotation={[Math.PI / 2.4, 0, 0]}>
         <ringGeometry args={[0.92, 0.96, 48]} />
-        <meshBasicMaterial color="#8f95ff" transparent opacity={0.4} side={THREE.DoubleSide} />
+        <meshBasicMaterial color="#e5484d" transparent opacity={0.4} side={THREE.DoubleSide} />
       </mesh>
-      <Sparkles count={60} scale={5} size={1} speed={0.4} opacity={0.5} color="#3a3aff" noise={0.2} />
+      <Sparkles count={60} scale={5} size={1} speed={0.4} opacity={0.5} color="#b3001b" noise={0.2} />
     </group>
   );
 }

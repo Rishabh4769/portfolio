@@ -11,7 +11,7 @@ export default function Background3D() {
           size={1.5} 
           speed={0.15} 
           opacity={0.3} 
-          color="#3a3aff" 
+          color="#b3001b" 
           noise={0.1}
         />
         <Sparkles 
