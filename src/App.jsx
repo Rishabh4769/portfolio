@@ -9,6 +9,7 @@ import Operations from './pages/Operations';
 import Capabilities from './pages/Capabilities';
 import Timeline from './pages/Timeline';
 import Signal from './pages/Signal';
+import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
 
 const Background3D = lazy(() => import('./components/Background3D'));
@@ -106,6 +107,7 @@ function Shell() {
           <Route path="/capabilities" element={<Capabilities />} />
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/signal" element={<Signal />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
@@ -113,6 +115,7 @@ function Shell() {
           <div className="footer-inner">
             <span className="sig">© 2026 <b>RISHABH JOSHI</b> — ALL SIGNALS MONITORED</span>
             <VisitorCount />
+            <NavLink to="/privacy">PRIVACY</NavLink>
             <span>CLEARANCE: PUBLIC · REV 2026.09</span>
           </div>
         </footer>

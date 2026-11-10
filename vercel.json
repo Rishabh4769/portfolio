@@ -1,14 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/"
-    }
-  ],
   "headers": [
     {
-      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ],
+      "source": "/assets/(.*)"
+    },
+    {
       "headers": [
         {
           "key": "X-Content-Type-Options",
@@ -24,7 +26,11 @@
         },
         {
           "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains"
         },
         {
           "key": "Content-Security-Policy",
@@ -34,7 +40,14 @@
           "key": "Cross-Origin-Opener-Policy",
           "value": "same-origin"
         }
-      ]
+      ],
+      "source": "/(.*)"
+    }
+  ],
+  "rewrites": [
+    {
+      "destination": "/",
+      "source": "/(.*)"
     }
   ]
 }
